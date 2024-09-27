@@ -1,6 +1,0 @@
-.bg-camo {
-    background: radial-gradient(circle, rgba(255, 255, 255, 1) 30%, rgba(187, 134, 252, 1) 60%),
-        radial-gradient(circle, rgba(187, 134, 252, 1) 40%, rgba(255, 255, 255, 1) 70%);
-    background-size: 50px 50px;
-    background-position: 0 0, 25px 25px;
-}

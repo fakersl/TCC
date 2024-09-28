@@ -1,27 +1,23 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link href="../../public/css/output.css" rel="stylesheet">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="../../public/css/output.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocketStore - Feminino</title>
+    <link href="../../public/css/output.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../public/css/output.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 </head>
 
 <body>
-  <div class="pt-10 text-center">
-    <h2 class="text-2xl font-bold">COLEÇÃO 2</h2>
-    <p class="text-gray-500">descrição da coleção... descrição da coleção... descrição da coleção...</p>
-  </div>
-
-  <section class="py-8 antialiased bg-gray-50 dark:bg-gray-900 md:py-12">
+    <section class="py-8 antialiased bg-gray-50 dark:bg-gray-900 md:py-12">
         <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
             <!-- Heading & Filters -->
             <div class="items-end justify-between mb-4 space-y-4 sm:flex sm:space-y-0 md:mb-8">
@@ -49,12 +45,12 @@
                                             stroke-width="2" d="m9 5 7 7-7 7"></path>
                                     </svg>
                                     <a href="#"
-                                        class="text-sm font-medium text-gray-700 ms-1 hover:text-purple-600 dark:text-gray-400 dark:hover:text-white md:ms-2">Masculino</a>
+                                        class="text-sm font-medium text-gray-700 ms-1 hover:text-purple-600 dark:text-gray-400 dark:hover:text-white md:ms-2">Feminino</a>
                                 </div>
                             </li>
                         </ol>
                     </nav>
-                    <h2 class="mt-3 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Peças Masculinas
+                    <h2 class="mt-3 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Peças Femininas
                     </h2>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -295,7 +291,7 @@
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
                     <!-- Modal header -->
                     <div class="flex items-start justify-between p-4 rounded-t md:p-5">
-                        <h3 class="text-lg font-normal text-gray-500 dark:text-gray-400">Filters</h3>
+                        <h3 class="text-lg font-normal text-gray-500 dark:text-gray-400">Filtros</h3>
                         <button type="button"
                             class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
                             data-modal-toggle="filterModal">
@@ -314,7 +310,7 @@
                                 data-tabs-toggle="#myTabContent" role="tablist">
                                 <li class="mr-1" role="presentation">
                                     <button
-                                        class="inline-block pb-2 pr-1 text-blue-600 border-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 dark:border-blue-500"
+                                        class="inline-block pb-2 pr-1 text-purple-600 border-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 dark:border-purple-500"
                                         id="brand-tab" data-tabs-target="#brand" type="button" role="tab"
                                         aria-controls="profile" aria-selected="true">Marcas</button>
                                 </li>
@@ -912,14 +908,11 @@
             </div>
         </form>
     </section>
-  </div>
 
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-  <script defer src="../../public/js/sidebar.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
-  <script defer src="../../public/js/owlcarousel.js"></script>
-
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script defer src="../../public/js/sidebar.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+    <script defer src="../../public/js/owlcarousel.js"></script>
 </body>
-
 </html>

@@ -2907,6 +2907,10 @@ select {
     max-width: 56rem;
   }
 
+  .md\:max-w-lg {
+    max-width: 32rem;
+  }
+
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2976,6 +2980,10 @@ select {
 
   .lg\:max-w-7xl {
     max-width: 80rem;
+  }
+
+  .lg\:max-w-xl {
+    max-width: 36rem;
   }
 
   .lg\:grid-cols-1 {

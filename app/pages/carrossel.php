@@ -71,7 +71,6 @@
     <script defer src="../../public/js/sidebar.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
     <script defer src="../../public/js/owlcarousel.js"></script>
-
 </body>
 
 </html>

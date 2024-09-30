@@ -39,14 +39,12 @@ if (!empty($marcas)) {
 } else {
     $query = "SELECT * FROM produto"; // Se nenhuma marca estiver selecionada
 }
-
 // Executando a consulta
 $result = $conexao->query($query);
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

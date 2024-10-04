@@ -59,6 +59,11 @@ $result = $conexao->query($query);
 </head>
 
 <body>
+    
+<!-- SIDEBAR PAINEL DE ADMIN -->
+
+<!-- FIM SIDEBAR PAINEL DE ADMIN -->
+ 
     <!-- Start block -->
     <section class="p-3 antialiased bg-gray-50 dark:bg-gray-900 sm:p-5">
         <div class="max-w-screen-xl px-4 mx-auto lg:px-12">
@@ -260,10 +265,10 @@ $result = $conexao->query($query);
                 <nav class="flex flex-col items-start justify-between p-4 space-y-3 md:flex-row md:items-center md:space-y-0"
                     aria-label="Table navigation">
                     <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                        Showing
+                        Exibindo
                         <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
-                        of
-                        <span class="font-semibold text-gray-900 dark:text-white">1000</span>
+                        de
+                        <span class="font-semibold text-gray-900 dark:text-white">10</span>
                     </span>
                     <ul class="inline-flex items-stretch -space-x-px">
                         <li>
@@ -279,16 +284,16 @@ $result = $conexao->query($query);
                             </a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                            <a href="#" aria-current="page"
+                                class="z-10 flex items-center justify-center px-3 py-2 text-sm leading-tight text-purple-600 border border-purple-300 bg-purple-50 hover:bg-purple-100 hover:text-purple-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">1</a>
                         </li>
                         <li>
                             <a href="#"
                                 class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
                         </li>
                         <li>
-                            <a href="#" aria-current="page"
-                                class="z-10 flex items-center justify-center px-3 py-2 text-sm leading-tight text-purple-600 border border-purple-300 bg-purple-50 hover:bg-purple-100 hover:text-purple-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                            <a href="#"
+                                class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">3</a>
                         </li>
                         <li>
                             <a href="#"
@@ -296,7 +301,7 @@ $result = $conexao->query($query);
                         </li>
                         <li>
                             <a href="#"
-                                class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
+                                class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">10</a>
                         </li>
                         <li>
                             <a href="#"
@@ -315,8 +320,8 @@ $result = $conexao->query($query);
             </div>
         </div>
     </section>
-    <!-- End block -->
-    <!-- Create modal -->
+    <!-- FIM DO BLOCO -->
+    <!-- MODAL CRIAR -->
     <div id="createProductModal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-2xl max-h-full p-4">
@@ -358,7 +363,7 @@ $result = $conexao->query($query);
                         <div>
                             <label for="precoProduto"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Preço</label>
-                            <input type="number" name="precoProduto" id="precoProduto"
+                            <input type="number" min="1" step="any" name="precoProduto" id="precoProduto"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
                                 placeholder="Preço do produto" required="">
                         </div>
@@ -397,7 +402,7 @@ $result = $conexao->query($query);
             </div>
         </div>
     </div>
-    <!-- Update modal -->
+    <!-- ATUALIZAR MODAL -->
     <div id="updateProductModal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-2xl max-h-full p-4">
@@ -479,7 +484,7 @@ $result = $conexao->query($query);
             </div>
         </div>
     </div>
-    <!-- Read modal -->
+    <!-- READ MODAL -->
     <div id="readProductModal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-xl max-h-full p-4">
@@ -614,5 +619,4 @@ $result = $conexao->query($query);
     <script defer src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
     <script defer src="../../public/js/owlcarousel.js"></script>
 </body>
-
 </html>

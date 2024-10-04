@@ -44,6 +44,7 @@ $conexao->query("CREATE TABLE IF NOT EXISTS fornecedor (
 
 $conexao->query("CREATE TABLE IF NOT EXISTS cadastro (
     idCadastro INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(200),
     tipoCadastro VARCHAR(50),
     fkIdUsuario INT NOT NULL,
     email VARCHAR(100) NOT NULL,

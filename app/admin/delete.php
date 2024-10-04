@@ -15,7 +15,8 @@ if (isset($_GET['idProduto'])) {
     $stmt->bind_param('i', $idProduto);
 
     if ($stmt->execute()) {
-        echo "Produto deletado com sucesso!";
+        header("Location: index_produtos.php?mensagem=Produto deletado com sucesso!");
+        exit();
     } else {
         echo "Erro ao deletar produto: " . $stmt->error;
     }

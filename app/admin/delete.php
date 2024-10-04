@@ -1,9 +1,9 @@
 <?php
 include("../../backend/conexao.php");
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['idProduto'])) {
+if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['idProduto'])) {
     $idProduto = intval($_GET['idProduto']);
-
+    
     if ($idProduto > 0) {
         $sql = "DELETE FROM produto WHERE idProduto = ?";
         if ($stmt = $conexao->prepare($sql)) {
@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['idProduto'])) {
             } else {
                 echo "Erro ao executar a consulta: " . $stmt->error;
             }
-            $stmt->close();
         } else {
             echo "Erro ao preparar a consulta: " . $conexao->error;
         }
@@ -22,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['idProduto'])) {
         echo "ID inválido.";
     }
 } else {
-    echo "Método de solicitação inválido.";
+    echo "Método de solicitação ou parâmetro inválido.";
 }
 
 $conexao->close();

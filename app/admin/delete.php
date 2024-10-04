@@ -1,28 +1,31 @@
 <?php
 include("../../backend/conexao.php");
 
-if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['idProduto'])) {
+if (isset($_GET['idProduto'])) {
     $idProduto = intval($_GET['idProduto']);
-    
-    if ($idProduto > 0) {
-        $sql = "DELETE FROM produto WHERE idProduto = ?";
-        if ($stmt = $conexao->prepare($sql)) {
-            $stmt->bind_param("i", $idProduto);
-            if ($stmt->execute()) {
-                header("Location: index_produtos.php");
-                exit;
-            } else {
-                echo "Erro ao executar a consulta: " . $stmt->error;
-            }
-        } else {
-            echo "Erro ao preparar a consulta: " . $conexao->error;
-        }
-    } else {
-        echo "ID inválido.";
+
+    // Prepara a consulta
+    $sql = "DELETE FROM produto WHERE idProduto = ?";
+    $stmt = $conexao->prepare($sql);
+
+    if ($stmt === false) {
+        die("Erro na preparação da declaração: " . $conexao->error);
     }
+
+    $stmt->bind_param('i', $idProduto);
+
+    if ($stmt->execute()) {
+        echo "Produto deletado com sucesso!";
+    } else {
+        echo "Erro ao deletar produto: " . $stmt->error;
+    }
+
+    // Fecha a declaração
+    $stmt->close();
 } else {
-    echo "Método de solicitação ou parâmetro inválido.";
+    echo "ID NÃO ESPECIFICADO";
 }
 
+// Fecha a conexão
 $conexao->close();
 ?>

@@ -62,7 +62,6 @@ $result = $conexao->query($query);
     <!-- Start block -->
     <section class="p-3 antialiased bg-gray-50 dark:bg-gray-900 sm:p-5">
         <div class="max-w-screen-xl px-4 mx-auto lg:px-12">
-            <!-- Start coding here -->
             <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
                 <div
                     class="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
@@ -558,32 +557,25 @@ $result = $conexao->query($query);
                 while ($item = $result->fetch_assoc()) {
                     // Exibir nome do produto e botão para excluir
                     echo '<div>' . htmlspecialchars($item['nomeProduto']) . '</div>';
-                    echo '<button onclick="document.getElementById(\'deleteModal' . $item['idProduto'] . '\').style.display=\'block\'">Excluir</button>';
-
+                    echo '<button onclick="openModal(\'deleteModal' . $item['idProduto'] . '\')">Excluir</button>';
+            
                     // Modal de exclusão
-                    echo '<form action="delete.php" method="GET" id="deleteModal' . $item['idProduto'] . '" style="display:block;"> <!-- Aqui muda para block -->
-                <input type="hidden" name="idProduto" value="' . $item['idProduto'] . '">
-                <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-                    <button type="button" onclick="closeModal(\'deleteModal' . $item['idProduto'] . '\')"
-                        class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        <span class="sr-only">Fechar modal</span>
-                    </button>
-    
-                    <p class="mb-4 text-gray-500 dark:text-gray-300">Você tem certeza que deseja excluir?</p>
-                    <div class="flex items-center justify-center space-x-4">
-                        <button type="button" onclick="closeModal(\'deleteModal' . $item['idProduto'] . '\')"
-                            class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-lg hover:bg-gray-100">Cancelar</button>
-                        <button type="submit"
-                            class="px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700">Continuar</button>
-                    </div>
-                </div>
-            </form>';
+                    echo '<form action="delete.php" method="GET" id="deleteModal' . $item['idProduto'] . '" style="display:none;">
+                            <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                                <button type="button" onclick="closeModal(\'deleteModal' . $item['idProduto'] . '\')" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="sr-only">Fechar modal</span>
+                                </button>
+            
+                                <p class="mb-4 text-gray-500 dark:text-gray-300">Você tem certeza que deseja excluir?</p>
+                                <div class="flex items-center justify-center space-x-4">
+                                    <button type="button" onclick="closeModal(\'deleteModal' . $item['idProduto'] . '\')" class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-lg hover:bg-gray-100">Cancelar</button>
+                                    <button type="submit" class="px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700">Continuar</button>
+                                </div>
+                            </div>
+                        </form>';
                 }
             } else {
                 echo "Nenhum produto encontrado.";
@@ -592,19 +584,25 @@ $result = $conexao->query($query);
             $conexao->close();
             ?>
 
-            <script>
-                function closeModal(modalId) {
-                    document.getElementById(modalId).style.display = 'none';
-                }
-            </script>
         </div>
 
     </div>
+    
     <script>
         function submitForm() {
             document.getElementById('filterForm').submit();
         }
     </script>
+    <script>
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+</script>
+
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script defer src="../../public/js/sidebar.js"></script>

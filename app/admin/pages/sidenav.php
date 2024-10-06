@@ -1,7 +1,5 @@
 <?php
-if (!isset($_SESSION)) {
-    session_start();
-}
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -50,12 +48,13 @@ if (!isset($_SESSION)) {
                             id="dropdown-user">
                             <div class="px-4 py-3" role="none">
                                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                    Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?>
+                                    <?php echo isset($_SESSION['admin_nome']) ? "Olá, " . htmlspecialchars($_SESSION['admin_nome']) : 'Olá!'; ?>
                                 </p>
                                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                    Email: <?php echo htmlspecialchars($_SESSION['email']); ?>
+                                    <?php echo isset($_SESSION['admin_email']) ? "E-mail: " . htmlspecialchars($_SESSION['admin_email']) : ''; ?>
                                 </p>
                             </div>
+
                             <ul class="py-1" role="none">
                                 <li>
                                     <a href="#"
@@ -122,10 +121,10 @@ if (!isset($_SESSION)) {
 
                     <!-- Conteúdo do dropdown -->
                     <div id="dropdown-example" class="hidden mt-2 space-y-2">
-                        <a href="create.php"
+                        <a href="./CRUD/criar_produtos.php"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Adicionar
                             Produto</a>
-                        <a href="#"
+                        <a href="./CRUD/listar_produtos.php"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Lista
                             de Produtos</a>
                         <a href="#"
@@ -138,7 +137,8 @@ if (!isset($_SESSION)) {
                 <li>
                     <a href="#"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                             <path d="M12 7.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z" />
                             <path fill-rule="evenodd"
                                 d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 14.625v-9.75ZM8.25 9.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM18.75 9a.75.75 0 0 0-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 0 0 .75-.75V9.75a.75.75 0 0 0-.75-.75h-.008ZM4.5 9.75A.75.75 0 0 1 5.25 9h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H5.25a.75.75 0 0 1-.75-.75V9.75Z"
@@ -185,7 +185,7 @@ if (!isset($_SESSION)) {
         <div class="p-4 mt-14">
         </div>
     </div>
-    
+
     <script defer src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
 </body>
 

@@ -1,43 +1,54 @@
 <?php
+session_start();
 include("../../../backend/conexao.php");
 
 $mostrarToastEmail = false;
 $mostrarToastSenha = false;
 
+// Processamento do login
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['email']) && strlen($_POST['email']) == 0) {
-        $mostrarToastEmail = true;
-    } else if (isset($_POST['senha']) && strlen($_POST['senha']) == 0) {
-        $mostrarToastEmail = false;
-        $mostrarToastSenha = true;
-    } else {
-        $email = $_POST['email'];
-        $senha = $_POST['senha'];
-        $sql_code = "SELECT * FROM cadastro WHERE email = '$email' AND senha = '$senha'";
-        $sql_query = $conexao->query($sql_code) or die("FALHA NA EXECUÇÃO DO CÓDIGO SQL: " . $conexao->error);
+    $email = $_POST['email'] ?? '';
+    $senha = $_POST['senha'] ?? '';
 
-        $quantidade = $sql_query->num_rows;
-        
-        if ($quantidade == 1) {
-            
-            $usuario = $sql_query->fetch_assoc();
-            
-            if (!isset($_SESSION)) {
-                session_start();
+    if (empty($email)) {
+        $mostrarToastEmail = true; // Exibir toast se o e-mail estiver vazio
+    } elseif (empty($senha)) {
+        $mostrarToastSenha = true; // Exibir toast se a senha estiver vazia
+    } else {
+        // Verifica se a conexão está ativa
+        if ($conexao->ping()) {
+            // Prepare a consulta
+            $stmt = $conexao->prepare("SELECT * FROM cadastro WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+
+            if ($resultado->num_rows > 0) {
+                $admin = $resultado->fetch_assoc();
+
+                if (password_verify($senha, $admin['senha'])) {
+                    // Define as variáveis de sessão
+                    $_SESSION['admin_nome'] = $admin['nome'];
+                    $_SESSION['admin_email'] = $admin['email'];
+                    
+                    header("Location: dashboard.php");
+                    exit();
+                } else {
+                    echo "Senha incorreta."; // Mensagem se a senha estiver errada
+                }
+            } else {
+                echo "Email não encontrado."; // Mensagem se o e-mail não existir
             }
-            
-            $_SESSION['email'] = $usuario['email'];
-            $_SESSION['nome'] = $usuario['nome'];
-            header("Location: dashboard.php");
         } else {
-            echo "<script>alert('Falha ao entrar! E-mail ou senha incorretos.');</script>";
+            echo "A conexão com o banco de dados falhou."; // Mensagem se a conexão falhar
         }
     }
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,31 +56,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Login - Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
 </head>
-
 <body>
     <?php include("./navbarIndex.php") ?>
     <section class="pt-20 bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <div
-                class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"> Painel - RocketStore
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        Painel - RocketStore
                     </h1>
-                    <form class="space-y-4 md:space-y-6" method="POST" action="dashboard.php">
+                    <form class="space-y-4 md:space-y-6" method="POST" action="sidenav.php"> 
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail:</label>
-                            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500" placeholder="nome@email.com">
+                            <input type="email" name="email" id="email"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                                placeholder="nome@email.com">
                         </div>
                         <div>
                             <label for="senha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Senha:</label>
-                            <input type="password" name="senha" id="senha" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500">
+                            <input type="password" name="senha" id="senha" placeholder="••••••••"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500">
                         </div>
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                                <input id="termos" aria-describedby="termos" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-purple-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-purple-600 dark:ring-offset-gray-800" required="">
+                                <input id="termos" aria-describedby="termos" type="checkbox"
+                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-purple-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-purple-600 dark:ring-offset-gray-800"
+                                    required="">
                             </div>
                             <div class="ml-3 text-sm">
-                                <label for="terms" class="font-light text-gray-500 dark:text-gray-300">Eu aceito os <a class="font-medium text-purple-600 hover:underline dark:text-purple-500" href="../admin/termos-e-condicoes.php">Termos e condições</a></label>
+                                <label for="termos" class="font-light text-gray-500 dark:text-gray-300">Eu aceito os <a
+                                        class="font-medium text-purple-600 hover:underline dark:text-purple-500"
+                                        href="../admin/termos-e-condicoes.php">Termos e condições</a></label>
                             </div>
                         </div>
                         <button type="submit"
@@ -115,8 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <script>
-        <?php
-        if ($mostrarToastEmail): ?>
+        <?php if ($mostrarToastEmail): ?>
             const toastEmail = document.getElementById('toast-email');
             toastEmail.classList.remove('hidden');
             toastEmail.classList.add('opacity-100');
@@ -124,12 +140,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 toastEmail.classList.remove('opacity-100');
                 setTimeout(() => {
                     toastEmail.classList.add('hidden');
-                }, 300); // Tempo para a transição de opacidade
-            }, 3000); // Oculta o toast após 3 segundos
+                }, 300); // Ocultar após a transição
+            }, 3000);
         <?php endif; ?>
 
-        <?php
-        if ($mostrarToastSenha): ?>
+        <?php if ($mostrarToastSenha): ?>
             const toastSenha = document.getElementById('toast-senha');
             toastSenha.classList.remove('hidden');
             toastSenha.classList.add('opacity-100');
@@ -141,9 +156,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }, 3000);
         <?php endif; ?>
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
 </body>
-
 </html>

@@ -63,7 +63,7 @@ $conexao->query("CREATE TABLE IF NOT EXISTS carrinho (
 $conexao->query("CREATE TABLE IF NOT EXISTS produto (
     idProduto INT AUTO_INCREMENT PRIMARY KEY,
     nomeProduto VARCHAR(100) NOT NULL,
-    marcaProduto INT NOT NULL,
+    marcaProduto VARCHAR(100) NOT NULL,
     precoProduto DECIMAL(10, 2) NOT NULL,
     categoriaProduto VARCHAR(100) NOT NULL,
     descricaoProduto VARCHAR(100) NOT NULL,

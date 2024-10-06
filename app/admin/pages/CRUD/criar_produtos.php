@@ -4,11 +4,12 @@ include("../../../../backend/conexao.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nomeProduto = $_POST['nomeProduto'];
-    $marcaProduto = $_POST['marcaProduto'];
     $precoProduto = $_POST['precoProduto'];
+    $categoriaProduto = $_POST['categoriaProduto'];
+    $marcaProduto = $_POST['marcaProduto'];
 
-    $stmt = $conexao->prepare("INSERT INTO produto (nomeProduto, marcaProduto, precoProduto) VALUES (?, ?, ?)");
-    $stmt->bind_param("ssi", $nomeProduto, $marcaProduto, $precoProduto);
+    $stmt = $conexao->prepare("INSERT INTO produto (nomeProduto, precoProduto, categoriaProduto, marcaProduto) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("siss", $nomeProduto, $precoProduto, $categoriaProduto, $marcaProduto);
     $stmt->execute();
 
     header("Location: listar_produtos.php");
@@ -188,19 +189,67 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </aside>
 
     <!-- Conteudo -->
-    <div class="p-6 ml-64">
-        <h1>Criar Novo Produto</h1>
-        <form method="POST">
-            <label for="nomeProduto">Nome:</label>
-            <input type="text" name="nomeProduto" required>
-            <label for="marcaProduto">Marca:</label>
-            <input type="text" name="marcaProduto" required>
-            <label for="precoProduto">Preço:</label>
-            <input type="number" name="precoProduto" required>
+    <div class="relative w-full max-w-5xl p-6 mx-auto ml-64 sm:p-5">
+        <div class="p-6">
+            <h1 class="mb-4 text-2xl font-bold">Adicionar Produto</h1>
+            <form method="POST">
+                <div class="grid gap-4 mb-4 sm:grid-cols-2">
 
-            <button type="submit">Criar</button>
-        </form>
-        <a href="listar_produtos.php">Voltar</a>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Nome do Produto:</label>
+                        <input type="text" name="nomeProduto" required
+                            class="block w-full p-2 mt-1 border border-gray-300 rounded-md" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Preço:</label>
+                        <input type="number" name="precoProduto" step="any" required
+                            class="block w-full p-2 mt-1 border border-gray-300 rounded-md" />
+                    </div>
+
+                    <div class="mb-4">
+                        <div>
+                            <label for="categoriaProduto"
+                                class="block mb-2 text-sm font-medium text-gray-900">Categoria</label>
+                            <select id="categoriaProduto" name="categoriaProduto"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5">
+                                <option value="" disabled selected>Selecione uma categoria</option>
+                                <option value="Camiseta">Camiseta</option>
+                                <option value="Calça">Calça</option>
+                                <option value="Hood">Hood</option>
+                                <option value="Saia">Saia</option>
+                                <option value="Shorts">Shorts</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Marca:</label>
+                        <input type="text" name="marcaProduto" required
+                            class="block w-full p-2 mt-1 border border-gray-300 rounded-md" />
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label for="descricaoProduto" class="block mb-2 text-sm font-medium text-gray-900 ">Descrição</label>
+                        <textarea id="descricaoProduto" rows="4"
+                            class=" resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 "
+                            placeholder="Descrição do produto..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="text-white inline-flex items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">
+                    <svg class="w-6 h-6 mr-1 -ml-1" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    Adicionar Produto
+                </button>
+            </form>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>

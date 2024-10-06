@@ -180,38 +180,47 @@ $resultado = $conexao->query($sql);
     <!-- Conteudo-->
     <div class="p-6 ml-64">
         <h1 class="mb-4 text-2xl font-bold">Lista de Produtos</h1>
-        <a href="criar_produtos.php" class="px-4 py-2 text-white bg-purple-500 rounded">Adicionar Produto</a>
+        <a href="criar_produtos.php"
+            class="px-4 py-2 text-white transition bg-purple-500 rounded hover:bg-purple-600">Adicionar Produto</a>
 
-        <table class="min-w-full mt-4 bg-white border border-gray-200">
-            <thead>
-                <tr>
-                    <th class="px-4 py-2 border-b-2 border-gray-200">ID</th>
-                    <th class="px-4 py-2 border-b-2 border-gray-200">Nome</th>
-                    <th class="px-4 py-2 border-b-2 border-gray-200">Marca</th>
-                    <th class="px-4 py-2 border-b-2 border-gray-200">Preço</th>
-                    <th class="px-4 py-2 border-b-2 border-gray-200">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($produto = $resultado->fetch_assoc()): ?>
+        <div class="mt-4 overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow">
+                <thead class="bg-gray-100">
                     <tr>
-                        <td class="px-4 py-2 border-b border-gray-200"><?php echo $produto['idProduto']; ?></td>
-                        <td class="px-4 py-2 border-b border-gray-200"><?php echo $produto['nomeProduto']; ?></td>
-                        <td class="px-4 py-2 border-b border-gray-200"><?php echo $produto['marcaProduto']; ?></td>
-                        <td class="px-4 py-2 border-b border-gray-200">R$
-                            <?php echo number_format($produto['precoProduto'], 2, ',', '.'); ?>
-                        </td>
-                        <td class="px-4 py-2 border-b border-gray-200">
-                            <a href="editar_produtos.php?id=<?php echo $produto['idProduto']; ?>"
-                                class="text-purple-500">Editar</a>
-                            <a href="deletar_produtos.php?id=<?php echo $produto['idProduto']; ?>"
-                                class="ml-4 text-purple-500">Deletar</a>
-                        </td>
+                        <th class="px-4 py-2 text-left text-gray-600 border-b-2 border-gray-200">ID</th>
+                        <th class="px-4 py-2 text-left text-gray-600 border-b-2 border-gray-200">Nome</th>
+                        <th class="px-4 py-2 text-left text-gray-600 border-b-2 border-gray-200">Categoria</th>
+                        <th class="px-4 py-2 text-left text-gray-600 border-b-2 border-gray-200">Marca</th>
+                        <th class="px-4 py-2 text-left text-gray-600 border-b-2 border-gray-200">Descrição</th>
+                        <th class="px-4 py-2 text-left text-gray-600 border-b-2 border-gray-200">Preço</th>
+                        <th class="px-4 py-2 text-left text-gray-600 border-b-2 border-gray-200">Ações</th>
                     </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php while ($produto = $resultado->fetch_assoc()): ?>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2 border-b border-gray-200"><?php echo $produto['idProduto']; ?></td>
+                            <td class="px-4 py-2 border-b border-gray-200"><?php echo $produto['nomeProduto']; ?></td>
+                            <td class="px-4 py-2 border-b border-gray-200"><?php echo $produto['categoriaProduto']; ?></td>
+                            <td class="px-4 py-2 border-b border-gray-200"><?php echo $produto['marcaProduto']; ?></td>
+                            <td class="px-4 py-2 border-b border-gray-200"><?php echo $produto['descricaoProduto']; ?></td>
+                            <td class="px-4 py-2 border-b border-gray-200">R$
+                                <?php echo number_format($produto['precoProduto'], 2, ',', '.'); ?>
+                            </td>
+                            <td class="px-4 py-2 border-b border-gray-200">
+                                <a href="editar_produtos.php?id=<?php echo $produto['idProduto']; ?>"
+                                    class="text-purple-500 hover:underline">Editar</a>
+                                <a href="deletar_produtos.php?id=<?php echo $produto['idProduto']; ?>"
+                                    class="ml-4 text-red-500 hover:underline">Deletar</a>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </body>

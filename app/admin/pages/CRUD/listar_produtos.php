@@ -18,14 +18,14 @@ $resultado = $conexao->query($sql);
 
 <body class="bg-gray-100">
 
-    <!-- Navbar -->
+    <!-- Navbar e Aside-->
     <nav class="sticky top-0 z-10 px-3 py-3 bg-white border-b-2 border-gray-200 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
                 <!-- Botão para abrir a sidebar em dispositivos móveis -->
                 <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
                     type="button"
-                    class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                    class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ">
                     <span class="sr-only">Abrir sidebar</span>
                     <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +45,7 @@ $resultado = $conexao->query($sql);
             <div class="flex items-center">
                 <div class="relative flex items-center ms-3">
                     <button type="button"
-                        class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                        class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 "
                         aria-expanded="false" data-dropdown-toggle="dropdown-user">
                         <span class="sr-only">Abrir menu do usuário</span>
                         <img class="w-8 h-8 rounded-full"
@@ -53,24 +53,29 @@ $resultado = $conexao->query($sql);
                     </button>
 
                     <!-- Dropdown do usuário -->
-                    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
-                        id="dropdown-user" data-popper-placement="bottom">
-                        <div class="px-4 py-3">
-                            <p class="text-sm text-gray-900 dark:text-white">Olá!</p>
-                            <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"></p>
+                    <div class="z-50 hidden block my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow "
+                        id="dropdown-user"
+                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(409px, 58px);"
+                        data-popper-placement="bottom">
+                        <div class="px-4 py-3" role="none">
+                            <p class="text-sm text-gray-900 " role="none">
+                                Olá, Administrador </p>
+                            <p class="text-sm font-medium text-gray-900 truncate " role="none">
+                                E-mail: admin@rocketstore.com </p>
                         </div>
-                        <ul class="py-1">
+
+                        <ul class="py-1" role="none">
                             <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                                    role="menuitem">Dashboard</a>
                             </li>
                             <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">Configurações</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                                    role="menuitem">Configuraçoes</a>
                             </li>
                             <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">Sair</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                                    role="menuitem">Sair</a>
                             </li>
                         </ul>
                     </div>
@@ -78,8 +83,6 @@ $resultado = $conexao->query($sql);
             </div>
         </div>
     </nav>
-
-
     <aside id="logo-sidebar"
         class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 "
         aria-label="Sidebar">
@@ -174,6 +177,7 @@ $resultado = $conexao->query($sql);
         </div>
     </aside>
 
+    <!-- Conteudo-->
     <div class="p-6 ml-64">
         <h1 class="mb-4 text-2xl font-bold">Lista de Produtos</h1>
         <a href="criar_produtos.php" class="px-4 py-2 text-white bg-purple-500 rounded">Adicionar Produto</a>

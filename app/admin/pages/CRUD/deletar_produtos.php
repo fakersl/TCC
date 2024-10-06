@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <title>Deletar Produto</title>
     <link href="../../../public/css/output.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
 </head>
 <body>
     <h1>Deletar Produto</h1>
@@ -28,5 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button type="submit">Deletar</button>
     </form>
     <a href="listar_produtos.php">Cancelar</a>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>

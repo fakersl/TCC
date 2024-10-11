@@ -41,12 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Criar Produto</title>
-    <link href="../../../public/css/output.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
 </head>
 
 <body class="bg-gray-100">
-
     <!-- Navbar e Aside-->
     <nav class="sticky top-0 z-10 px-3 py-3 bg-white border-b-2 border-gray-200 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
@@ -250,11 +248,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <div class="sm:col-span-2">
                         <label for="descricaoProduto"
-                            class="block mb-2 text-sm font-medium text-gray-900 ">Descrição</label>
-                        <textarea id="descricaoProduto" rows="4"
-                            class=" resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 "
+                            class="block mb-2 text-sm font-medium text-gray-900">Descrição</label>
+                        <textarea id="descricaoProduto" name="descricao" rows="4"
+                            class="resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500"
                             placeholder="Descrição do produto..."></textarea>
                     </div>
+
 
                     <div class="sm:col-span-2">
                         <label class="block mb-2 text-sm font-medium text-gray-900" for="imagemProduto">Escolher

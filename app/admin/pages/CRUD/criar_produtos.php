@@ -8,15 +8,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $categoriaProduto = $_POST['categoriaProduto'];
     $marcaProduto = $_POST['marcaProduto'];
 
-    $stmt = $conexao->prepare("INSERT INTO produto (nomeProduto, precoProduto, categoriaProduto, marcaProduto) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("siss", $nomeProduto, $precoProduto, $categoriaProduto, $marcaProduto);
-    $stmt->execute();
+    // Verifique se o arquivo foi enviado e é válido
+    if (isset($_FILES['imagemProduto']) && $_FILES['imagemProduto']['error'] == 0) {
+        // Diretório onde a imagem será salva
+        $diretorio = '../../../../public/uploads/'; // Mude este caminho conforme necessário
+        $nomeArquivo = basename($_FILES['imagemProduto']['name']);
+        $caminhoCompleto = $diretorio . $nomeArquivo;
 
-    header("Location: listar_produtos.php");
-    exit();
+        // Mover o arquivo para o diretório
+        if (move_uploaded_file($_FILES['imagemProduto']['tmp_name'], $caminhoCompleto)) {
+            // Preparar a consulta SQL para inserir os dados
+            $stmt = $conexao->prepare("INSERT INTO produto (nomeProduto, precoProduto, categoriaProduto, marcaProduto, imagemProduto) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sdsss", $nomeProduto, $precoProduto, $categoriaProduto, $marcaProduto, $nomeArquivo); // armazena apenas o nome do arquivo
+
+            // Executar a consulta
+            $stmt->execute();
+
+            // Redirecionar para a página de listagem de produtos
+            header("Location: listar_produtos.php");
+            exit();
+        } else {
+            echo "Erro ao mover o arquivo.";
+        }
+    } else {
+        echo "Erro no upload do arquivo.";
+    }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -192,7 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="relative w-full max-w-5xl p-6 mx-auto ml-64 sm:p-5">
         <div class="p-6">
             <h1 class="mb-4 text-2xl font-bold">Adicionar Produto</h1>
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
 
                     <div class="mb-4">
@@ -231,10 +249,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
 
                     <div class="sm:col-span-2">
-                        <label for="descricaoProduto" class="block mb-2 text-sm font-medium text-gray-900 ">Descrição</label>
+                        <label for="descricaoProduto"
+                            class="block mb-2 text-sm font-medium text-gray-900 ">Descrição</label>
                         <textarea id="descricaoProduto" rows="4"
                             class=" resize-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 "
                             placeholder="Descrição do produto..."></textarea>
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label class="block mb-2 text-sm font-medium text-gray-900" for="imagemProduto">Escolher
+                            Imagem</label>
+                        <input type="file" id="imagemProduto" name="imagemProduto" accept="image/*" required>
                     </div>
                 </div>
 

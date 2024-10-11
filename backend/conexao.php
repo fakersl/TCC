@@ -67,6 +67,7 @@ $conexao->query("CREATE TABLE IF NOT EXISTS produto (
     precoProduto DECIMAL(10, 2) NOT NULL,
     categoriaProduto VARCHAR(100) NOT NULL,
     descricaoProduto VARCHAR(100) NOT NULL,
+    imagemProduto MEDIUMBLOB,
     fkIdFornecedor INT NOT NULL,
     FOREIGN KEY (fkIdFornecedor) REFERENCES fornecedor(idFornecedor)
 )");

@@ -215,8 +215,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700" for="precoProduto">Categoria:</label>
-                        <input class="block w-full p-2 mt-1 border border-gray-300 rounded-md" type="number"
-                            name="categoriaProduto" value="<?php echo $produto['categoriaProduto']; ?>" required>
+                        <input class="block w-full p-2 mt-1 border border-gray-300 rounded-md" type="text"
+                            name="categoriaProduto" value="<?php echo $produto['categoriaProduto']; ?>">
                     </div>
 
                     <div class="mb-4">

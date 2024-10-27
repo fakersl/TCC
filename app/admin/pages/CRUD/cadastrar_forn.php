@@ -2,21 +2,46 @@
 session_start();
 include("../../../../backend/conexao.php");
 
-$sql = "SELECT * FROM produto";
-$resultado = $conexao->query($sql);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nomeFornecedor = $_POST['nomeFornecedor'];
+    $emailFornecedor = $_POST['emailFornecedor'];
+    $produtoFornecedor = $_POST['produtoFornecedor'];
+    $telefoneFornecedor = $_POST['telefoneFornecedor'];
+    $enderecoFornecedor = $_POST['enderecoFornecedor'];
+
+    $stmtEndereco = $conexao->prepare("INSERT INTO endereco (rua) VALUES (?)");
+    $stmtEndereco->bind_param("s", $enderecoFornecedor); 
+    if ($stmtEndereco->execute()) {
+        $idEndereco = $stmtEndereco->insert_id;
+
+        // Insert supplier data
+        $stmtFornecedor = $conexao->prepare("INSERT INTO fornecedor (nomeFornecedor, emailFornecedor, produtoFornecedor, telefoneFornecedor, fkIdEndereco) VALUES (?, ?, ?, ?, ?)");
+        $stmtFornecedor->bind_param("ssssi", $nomeFornecedor, $emailFornecedor, $produtoFornecedor, $telefoneFornecedor, $idEndereco);
+
+        if ($stmtFornecedor->execute()) {
+            header("Location: listar_fornecedores.php");
+            exit();
+        } else {
+            echo "Erro ao cadastrar fornecedor: " . $stmtFornecedor->error;
+        }
+    } else {
+        echo "Erro ao cadastrar endereço: " . $stmtEndereco->error;
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
-    <title>Listar Produtos</title>
+    <title>Cadastrar Fornecedor</title>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
 </head>
 
 <body class="bg-gray-100">
-
+    
     <!-- Navbar e Aside-->
     <nav class="sticky top-0 z-10 px-3 py-3 bg-white border-b-2 border-gray-200 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
@@ -65,7 +90,7 @@ $resultado = $conexao->query($sql);
 
                         <ul class="py-1" role="none">
                             <li>
-                                <a href="../CRUD/listar_produtos.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                                <a href="../CRUD/listar_produtos.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                                     role="menuitem">Dashboard</a>
                             </li>
                             <li>
@@ -176,46 +201,49 @@ $resultado = $conexao->query($sql);
         </div>
     </aside>
 
-    <!-- Conteúdo Principal -->
+    <!--Conteudo Principal-->
     <div class="relative w-full max-w-5xl p-6 mx-auto ml-64 sm:p-5">
         <div class="p-6">
-            <h1 class="text-xl font-bold">Lista de Produtos</h1>
+            <h1 class="mb-4 text-2xl font-bold">Cadastrar Fornecedor</h1>
+            <form method="POST">
+                <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Nome do Fornecedor:</label>
+                        <input type="text" name="nomeFornecedor" required
+                            class="block w-full p-2 mt-1 border border-gray-300 rounded-md" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Email:</label>
+                        <input type="email" name="emailFornecedor" required
+                            class="block w-full p-2 mt-1 border border-gray-300 rounded-md" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Endereço:</label>
+                        <input type="text" name="enderecoFornecedor"
+                            class="block w-full p-2 mt-1 border border-gray-300 rounded-md" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Produto:</label>
+                        <input type="text" name="produtoFornecedor"
+                            class="block w-full p-2 mt-1 border border-gray-300 rounded-md" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Telefone:</label>
+                        <input type="text" name="telefoneFornecedor"
+                            class="block w-full p-2 mt-1 border border-gray-300 rounded-md" />
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="text-white inline-flex items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    Cadastrar Fornecedor
+                </button>
+            </form>
         </div>
-        <table class="min-w-full mt-4 overflow-hidden bg-white rounded-lg shadow-md">
-            <thead>
-                <tr class="text-white bg-gray-800">
-                    <th class="px-4 py-3 text-left">ID</th>
-                    <th class="px-4 py-3 text-left">Nome</th>
-                    <th class="px-4 py-3 text-left">Preço</th>
-                    <th class="px-4 py-3 text-left">Categoria</th>
-                    <th class="px-4 py-3 text-left">Marca</th>
-                    <th class="px-4 py-3 text-left">Descrição</th>
-                    <th class="px-4 py-3 text-left">Imagem</th>
-                    <th class="px-4 py-3 text-left">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($produto = $resultado->fetch_assoc()): ?>
-                    <tr class="border-b">
-                        <td class="px-4 py-3"><?php echo $produto['idProduto']; ?></td>
-                        <td class="px-4 py-3"><?php echo $produto['nomeProduto']; ?></td>
-                        <td class="px-4 py-4">R$
-                            <?php echo number_format($produto['precoProduto'], 2, ',', '.'); ?>
-                        </td>
-                        <td class="px-4 py-3"><?php echo $produto['categoriaProduto']; ?></td>
-                        <td class="px-4 py-3"><?php echo $produto['marcaProduto']; ?></td>
-                        <td class="px-4 py-3"><?php echo $produto['descricaoProduto']; ?></td>
-                        <td class="px-4 py-3"><?php echo $produto['imagemProduto']; ?></td>
-                        <td class="px-4 py-3">
-                            <a href="editar_produtos.php?id=<?php echo $produto['idProduto']; ?>"
-                                class="text-purple-500 hover:underline">Editar</a>
-                            <a href="deletar_produtos.php?id=<?php echo $produto['idProduto']; ?>"
-                                class="ml-4 text-red-500 hover:underline">Deletar</a>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>

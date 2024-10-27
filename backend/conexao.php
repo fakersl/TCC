@@ -38,13 +38,12 @@ $conexao->query("CREATE TABLE IF NOT EXISTS cadastro (
     id_cadastro INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(200),
     email VARCHAR(100) NOT NULL,
+    cpf VARCHAR(20) NOT NULL,
     cep VARCHAR(10) NOT NULL,
     cidade VARCHAR(200) NOT NULL,
     bairro VARCHAR(200) NOT NULL,
     endereco VARCHAR(200) NOT NULL,
     numero VARCHAR(200) NOT NULL,
-    cpf VARCHAR(20) NOT NULL,
-
     senha VARCHAR(255) NOT NULL
 )");
 

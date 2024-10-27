@@ -1,5 +1,37 @@
 <?php
+session_start();
 include("../../backend/conexao.php");
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+
+    $stmt = $conexao->prepare("SELECT id_cadastro, nome, senha FROM cadastro WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($id_cadastro, $nome, $hash_senha);
+        $stmt->fetch();
+
+        // Verificação da senha
+        if (password_verify($senha, $hash_senha)) {
+            $_SESSION['id_cadastro'] = $id_cadastro;
+            $_SESSION['nome'] = $nome;
+
+            header("Location: index.php?login=sucesso");
+            exit();
+        } else {
+            error_log("Senha incorreta para o e-mail: $email");
+            $erro = "E-mail ou senha inválidos.";
+        }
+    } else {
+        error_log("Usuário não encontrado: $email");
+        $erro = "E-mail ou senha inválidos.";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -24,37 +56,36 @@ include("../../backend/conexao.php");
                 <a href="./cadastro.php" class="text-purple-600 dark:text-purple-400 hover:underline">Inscreva-se</a>
             </p>
 
-            <form class="bg-white dark:bg-gray-800">
+            <form action="index.php" method="POST">
                 <div class="mb-4">
                     <label for="email"
                         class="block text-sm font-medium text-gray-700 dark:text-gray-300">E-mail:</label>
-                    <input type="email" id="email"
+                    <input type="email" id="email" name="email"
+                        value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
                         class="w-full px-4 py-2 leading-tight bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:bg-white dark:focus:bg-gray-700 focus:border-purple-600"
-                        placeholder="seuemail@email.com">
+                        placeholder="seuemail@email.com" required>
                 </div>
                 <div class="mb-6">
-                    <label for="password"
-                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Senha</label>
-                    <button type="button"
-                        class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 dark:text-gray-400">
-                        <span class="material-symbols-outlined">
-                        </span>
-                    </button>
-                    <input type="password" id="password"
+                    <label for="senha" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Senha</label>
+                    <input type="password" id="senha" name="senha"
                         class="w-full px-4 py-2 leading-tight bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:bg-white dark:focus:bg-gray-700 focus:border-purple-600"
-                        placeholder="*********">
+                        placeholder="*********" required>
                 </div>
+                <?php if (isset($erro)) { ?> <!-- Display error message -->
+                    <div class="mb-4 text-red-600 dark:text-red-400">
+                        <?php echo $erro; ?>
+                    </div>
+                <?php } ?>
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center">
                         <input type="checkbox" id="remember"
-                            class="shrink-0 mt-0.5 border-gray-200 rounded accent-purple-500 text-purple-600 focus:ring-purple-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-400 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:pointer-events-none">
+                            class="shrink-0 mt-0.5 border-gray-200 rounded accent-purple-500 text-purple-600 focus:ring-purple-500 dark:bg-gray-800 dark:border-gray-700">
                         <label for="remember" class="ml-2 text-sm text-gray-600 dark:text-gray-400">Lembrar-se</label>
                     </div>
 
-                    <a href="#" class="text-sm text-purple-600 dark:text-purple-500 hover:underline">Esqueci a
-                        senha</a>
+                    <a href="#" class="text-sm text-purple-600 dark:text-purple-500 hover:underline">Esqueci a senha</a>
                 </div>
-                <button id="toggle-dark-mode" type="button"
+                <button type="submit"
                     class="flex items-center justify-center w-full px-4 py-2 text-white bg-purple-500 border-2 border-gray-200 rounded-lg hover:bg-purple-600 dark:border-gray-600">Entrar</button>
             </form>
 

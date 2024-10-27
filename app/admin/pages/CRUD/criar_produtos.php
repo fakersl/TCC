@@ -21,22 +21,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES['imagemProduto']) && $_FILES['imagemProduto']['error'] == 0) {
         $diretorio = '../../../../public/uploads/';
         $extensao = pathinfo($_FILES['imagemProduto']['name'], PATHINFO_EXTENSION);
-        $nomeArquivo = uniqid() . '.' . $extensao;
+        $nomeOriginal = pathinfo($_FILES['imagemProduto']['name'], PATHINFO_FILENAME);
+        $nomeArquivo = $nomeOriginal . '.' . $extensao;
         $caminhoCompleto = $diretorio . $nomeArquivo;
 
-        // Mover o arquivo para o diretório
-        if (move_uploaded_file($_FILES['imagemProduto']['tmp_name'], $caminhoCompleto)) {
+        // Verifique se o arquivo já existe
+        if (!file_exists($caminhoCompleto)) {
+            // Mover o arquivo para o diretório
+            if (move_uploaded_file($_FILES['imagemProduto']['tmp_name'], $caminhoCompleto)) {
+                $stmt = $conexao->prepare("INSERT INTO produto (nomeProduto, precoProduto, categoriaProduto, marcaProduto, imagemProduto, fkIdFornecedor) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("sdsssi", $nomeProduto, $precoProduto, $categoriaProduto, $marcaProduto, $nomeArquivo, $fkIdFornecedor);
+
+                if ($stmt->execute()) {
+                    header("Location: listar_produtos.php");
+                    exit();
+                } else {
+                    $_SESSION['error'] = "Erro ao adicionar produto.";
+                }
+            } else {
+                $_SESSION['error'] = "Erro ao mover o arquivo.";
+            }
+        } else {
+            // Se o arquivo já existir, utilize o nome do arquivo existente
             $stmt = $conexao->prepare("INSERT INTO produto (nomeProduto, precoProduto, categoriaProduto, marcaProduto, imagemProduto, fkIdFornecedor) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("sdsssi", $nomeProduto, $precoProduto, $categoriaProduto, $marcaProduto, $nomeArquivo, $fkIdFornecedor);
-            
+
             if ($stmt->execute()) {
                 header("Location: listar_produtos.php");
                 exit();
             } else {
                 $_SESSION['error'] = "Erro ao adicionar produto.";
             }
-        } else {
-            $_SESSION['error'] = "Erro ao mover o arquivo.";
         }
     } else {
         $_SESSION['error'] = "Erro no upload do arquivo.";

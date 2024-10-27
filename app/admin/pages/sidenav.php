@@ -13,7 +13,6 @@ session_start();
 </head>
 
 <body>
-    
     <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
@@ -129,7 +128,7 @@ session_start();
                             de Produtos</a>
                         <a href="#"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Categorias</a>
-                        
+
                     </div>
 
                 </li>
@@ -182,10 +181,48 @@ session_start();
 
     <div class="p-4 sm:ml-64">
         <div class="p-4 mt-14">
-            
+            <canvas id="meuGrafico" class="container mx-auto my-8"></canvas>
         </div>
     </div>
+    <script>
+        async function carregarGrafico() {
+            const response = await fetch('dados_grafico.php');
+            const dados = await response.json();
 
+            //transformar os dados em label e data pro grafico
+            const labels = dados.map(item => item.categoria);
+            const valores = dados.map(item => item.quantidade);
+
+            //criar o grafico
+            const ctx = document.getElementById('meuGrafico').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Quantidade por Categoria',
+                        data: valores,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        window.onload = carregarGrafico;
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
+        integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
 </body>
 

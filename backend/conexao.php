@@ -37,7 +37,21 @@ $conexao->query("CREATE TABLE IF NOT EXISTS fornecedor (
 $conexao->query("CREATE TABLE IF NOT EXISTS cadastro (
     id_cadastro INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(200),
-    email VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL,
+    cep VARCHAR(10) NOT NULL,
+    cidade VARCHAR(200) NOT NULL,
+    bairro VARCHAR(200) NOT NULL,
+    endereco VARCHAR(200) NOT NULL,
+    numero VARCHAR(200) NOT NULL,
+    cpf VARCHAR(20) NOT NULL,
+
+    senha VARCHAR(255) NOT NULL
+)");
+
+$conexao->query("CREATE TABLE IF NOT EXISTS administrador (
+    id_administrador INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(200),
+    email VARCHAR(100) NOT NULL,
     senha VARCHAR(255) NOT NULL
 )");
 
@@ -45,7 +59,7 @@ $conexao->query("CREATE TABLE IF NOT EXISTS usuario (
     idUsuario INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     telefone VARCHAR(20) NOT NULL,
-    genero VARCHAR(20),
+    cep VARCHAR(20),
     cpf VARCHAR(20) NOT NULL UNIQUE,
     dataNascimento DATE NOT NULL,
     fkIdEndereco INT NOT NULL,
@@ -77,14 +91,14 @@ $conexao->query("CREATE TABLE IF NOT EXISTS carrinho (
 
 // Verificar e criar o administrador
 $emailAdmin = 'admin@rocketstore.com';
-$sqlVerificarAdmin = "SELECT * FROM cadastro WHERE email = '$emailAdmin'";
+$sqlVerificarAdmin = "SELECT * FROM administrador WHERE email = '$emailAdmin'";
 $resultado = $conexao->query($sqlVerificarAdmin);
 
 if ($resultado->num_rows == 0) {
     $nomeAdmin = 'Administrador';
     $senhaAdmin = 'admin@rocketstore.com';
 
-    $sqlInserirAdmin = "INSERT INTO cadastro (nome, email, senha) 
+    $sqlInserirAdmin = "INSERT INTO administrador (nome, email, senha) 
                         VALUES ('$nomeAdmin', '$emailAdmin', '$senhaAdmin')";
 
     if ($conexao->query($sqlInserirAdmin) === TRUE) {

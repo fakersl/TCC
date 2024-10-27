@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -9,63 +9,119 @@
 </head>
 
 <body class="flex items-center justify-center min-h-screen bg-gray-100 select-none dark:bg-gray-900 dark:text-white">
-    <div
-        class="flex flex-col w-full max-w-4xl overflow-hidden bg-white rounded-lg shadow-md md:flex-row dark:bg-gray-800">
-        <div class="w-full p-8 md:w-1/2">
-            <div class="flex justify-center mb-8">
-                <img id="logo" src="../../public/assets/Logo.svg" alt="Logo" class="w-20 h-20">
-            </div>
-            <h2 class="mb-4 text-2xl font-bold text-gray-700 dark:text-gray-300">Cadastrar</h2>
-            <p class="mb-6 text-sm text-gray-600 dark:text-gray-400">Já possui uma conta?<a href="./login.html"
-                    class="text-purple-600 dark:text-purple-400 hover:underline px-1">Entrar</a>
-            </p>
+    <div class="flex flex-col w-full max-w-4xl p-8 overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <div class="flex justify-center mb-2">
+            <img id="logo" src="../../public/assets/Logo.svg" alt="Logo" class="w-20 h-20">
+        </div>
+        <h2 class="mb-4 text-2xl font-bold text-center text-gray-700 dark:text-gray-300">Cadastrar</h2>
+        <p class="mb-6 text-sm text-center text-gray-600 dark:text-gray-400">Já possui uma conta?<a href="./login.php"
+                class="px-1 text-purple-600 dark:text-purple-400 hover:underline">Entrar</a>
+        </p>
 
-            <form action="#" method="post" class="bg-white dark:bg-gray-800">
-                <div class="mb-4">
+        <form action="" method="post" class="bg-white dark:bg-gray-800">
+            <div class="grid grid-cols-1 gap-4 mb-4 md:grid-cols-2">
+                <div>
+                    <label for="nome" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome:</label>
+                    <input type="text" id="nome" name="nome"
+                        class="w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
+                        placeholder="Seu Nome Completo" required>
+                </div>
+                <div>
                     <label for="email"
                         class="block text-sm font-medium text-gray-700 dark:text-gray-300">E-mail:</label>
-                    <input type="email" id="email"
-                        class="w-full px-4 py-2 leading-tight bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:bg-white dark:focus:bg-gray-700 focus:border-purple-600"
-                        placeholder="seuemail@email.com">
+                    <input type="email" id="email" name="email"
+                        class="w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
+                        placeholder="seuemail@email.com" required>
                 </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 mb-4 md:grid-cols-2">
+                <div>
+                    <label for="cpf" class="block text-sm font-medium text-gray-700 dark:text-gray-300">CPF:</label>
+                    <input type="text" id="cpf" name="cpf"
+                        class="w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
+                        placeholder="000.000.000-00" required>
+                </div>
+                <div>
+                    <label for="cep" class="block text-sm font-medium text-gray-700 dark:text-gray-300">CEP:</label>
+                    <input type="text" id="cep" name="cep"
+                        class="w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
+                        placeholder="00000-000" required onblur="buscarEndereco()">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-4 mb-4 md:grid-cols-4">
+                <div>
+                    <label for="cidade" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cidade:</label>
+                    <input type="text" id="cidade" name="cidade"
+                        class="w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
+                        placeholder="Sua cidade" required>
+                </div>
+                <div>
+                    <label for="bairro" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Bairro:</label>
+                    <input type="text" id="bairro" name="bairro"
+                        class="w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
+                        placeholder="Seu bairro" required>
+                </div>
+                <div>
+                    <label for="endereco" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Endereço:</label>
+                    <input type="text" id="endereco" name="endereco"
+                        class="w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
+                        placeholder="Seu endereço" required>
+                </div>
+                <div>
+                    <label for="numero" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Número:</label>
+                    <input type="text" id="numero" name="numero"
+                        class="w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
+                        placeholder="Número da casa" required>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 mb-4 md:grid-cols-2">
+                <div class="mb-6">
+                    <label for="telefone"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone"
+                        class="w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
+                        placeholder="(00) 00000-0000" required>
+                </div>
+
                 <div class="mb-6">
                     <label for="password"
                         class="block text-sm font-medium text-gray-700 dark:text-gray-300">Senha:</label>
-                    <input type="email" id="email"
-                        class="w-full px-4 py-2 leading-tight bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:bg-white dark:focus:bg-gray-700 focus:border-purple-600"
-                        placeholder="*********">
-                </div>
-
-                <button id="toggle-dark-mode" type="button"
-                    class="font-medium flex items-center justify-center w-full px-4 py-2 text-white bg-purple-500 border-2 border-purple-700 rounded-lg hover:bg-purple-600 hover:border-purple-900 dark-border-gray-600">Cadastrar!</button>
-            </form>
-
-            <div class="flex items-center justify-center mt-6 space-x-4">
-                <hr class="w-1/3 border-gray-300 dark:border-gray-600">
-                <span class="text-xs break-normal text-gray-500 dark:text-gray-400">Ou continuar com</span>
-                <hr class="w-1/3 border-gray-300 dark:border-gray-600">
-            </div>
-
-            <div class="mt-6">
-                <button
-                    class="flex items-center justify-center w-full px-4 py-2 bg-white hover:bg-gray-200 hover:underline hover:border-gray-300 border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                    <img src="https://img.icons8.com/color/48/000000/google-logo.png" class="w-6 h-6 mr-2">
-                    <span class="font-medium">Google</span>
-                </button>
-                <div class="fixed bottom-4 right-4">
-                    <label for="theme-toggle" class="inline flex items-center cursor-pointer">
-                        <input type="checkbox" id="theme-toggle" class="sr-only peer">
-                        <div
-                            class="outline-purple-500 relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-purple-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-purple-600">
-                        </div>
-                    </label>
+                    <input type="password" id="password" name="password"
+                        class="w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
+                        placeholder="*********" required>
                 </div>
             </div>
-        </div>
-        <div class="hidden md:block md:w-1/2">
-            <div class="object-cover w-full h-full bg-purple-500"></div>
-        </div>
-        <script defer src="../../public/js/script.js"></script>
+
+            <button type="submit"
+                class="w-full px-4 py-2 font-medium text-white bg-purple-500 rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-600">Cadastrar!</button>
+        </form>
+    </div>
+    <script>
+        async function buscarEndereco() {
+            const cep = document.getElementById('cep').value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    const data = await response.json();
+                    if (!data.erro) {
+                        document.getElementById('logradouro').value = data.logradouro;
+                        document.getElementById('bairro').value = data.bairro;
+                        document.getElementById('cidade').value = data.localidade;
+                        document.getElementById('estado').value = data.uf;
+                    } else {
+                        alert('CEP não encontrado!');
+                    }
+                } catch (error) {
+                    console.error('Erro ao buscar CEP:', error);
+                }
+            } else {
+                alert('CEP inválido!');
+            }
+        }
+    </script>
 </body>
 
 </html>

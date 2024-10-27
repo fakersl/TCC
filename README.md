@@ -1,3 +1,2 @@
-# TCC
- 
-# npx tailwindcss -i public/css/input.css -o public/css/output.css --watch
+# tcc
+ mesmo tcc do fakersl, mas n tenho acesso por isso to criando esse repo

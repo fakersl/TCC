@@ -1,38 +1,49 @@
 <?php
+
 session_start();
 include("../../../../backend/conexao.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nomeProduto = $_POST['nomeProduto'];
-    $precoProduto = $_POST['precoProduto'];
-    $categoriaProduto = $_POST['categoriaProduto'];
-    $marcaProduto = $_POST['marcaProduto'];
+    $nomeProduto = htmlspecialchars(trim($_POST['nomeProduto']));
+    $precoProduto = filter_var($_POST['precoProduto'], FILTER_VALIDATE_FLOAT);
+    $categoriaProduto = htmlspecialchars(trim($_POST['categoriaProduto']));
+    $marcaProduto = htmlspecialchars(trim($_POST['marcaProduto']));
+    $fkIdFornecedor = htmlspecialchars(trim($_POST['fkIdFornecedor']));
+
+    // Verifique se o preço é válido
+    if ($precoProduto === false) {
+        $_SESSION['error'] = "Preço inválido.";
+        header("Location: criar_produto.php");
+        exit();
+    }
 
     // Verifique se o arquivo foi enviado e é válido
     if (isset($_FILES['imagemProduto']) && $_FILES['imagemProduto']['error'] == 0) {
-        // Diretório onde a imagem será salva
-        $diretorio = '../../../../public/uploads/'; // Mude este caminho conforme necessário
-        $nomeArquivo = basename($_FILES['imagemProduto']['name']);
+        $diretorio = '../../../../public/uploads/';
+        $extensao = pathinfo($_FILES['imagemProduto']['name'], PATHINFO_EXTENSION);
+        $nomeArquivo = uniqid() . '.' . $extensao;
         $caminhoCompleto = $diretorio . $nomeArquivo;
 
         // Mover o arquivo para o diretório
         if (move_uploaded_file($_FILES['imagemProduto']['tmp_name'], $caminhoCompleto)) {
-            // Preparar a consulta SQL para inserir os dados
-            $stmt = $conexao->prepare("INSERT INTO produto (nomeProduto, precoProduto, categoriaProduto, marcaProduto, imagemProduto) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("sdsss", $nomeProduto, $precoProduto, $categoriaProduto, $marcaProduto, $nomeArquivo); // armazena apenas o nome do arquivo
-
-            // Executar a consulta
-            $stmt->execute();
-
-            // Redirecionar para a página de listagem de produtos
-            header("Location: listar_produtos.php");
-            exit();
+            $stmt = $conexao->prepare("INSERT INTO produto (nomeProduto, precoProduto, categoriaProduto, marcaProduto, imagemProduto, fkIdFornecedor) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sdsssi", $nomeProduto, $precoProduto, $categoriaProduto, $marcaProduto, $nomeArquivo, $fkIdFornecedor);
+            
+            if ($stmt->execute()) {
+                header("Location: listar_produtos.php");
+                exit();
+            } else {
+                $_SESSION['error'] = "Erro ao adicionar produto.";
+            }
         } else {
-            echo "Erro ao mover o arquivo.";
+            $_SESSION['error'] = "Erro ao mover o arquivo.";
         }
     } else {
-        echo "Erro no upload do arquivo.";
+        $_SESSION['error'] = "Erro no upload do arquivo.";
     }
+
+    header("Location: criar_produto.php");
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -230,21 +241,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <select id="categoriaProduto" name="categoriaProduto"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5">
                                 <option value="" disabled selected>Selecione uma categoria</option>
-                                <option value="Camiseta">Camiseta</option>
+                                <option value="CamisetaM">Camiseta [M]</option>
+                                <option value="CamisetaF">Camiseta [F]</option>
                                 <option value="Calça">Calça</option>
-                                <option value="Hood">Hood</option>
+                                <option value="Moletom">Moletom</option>
                                 <option value="Saia">Saia</option>
                                 <option value="Shorts">Shorts</option>
+                                <option value="Tenis">Tênis</option>
                             </select>
                         </div>
                     </div>
 
+                    <div class="mb-4">
+                        <label for="fornecedor" class="block mb-2 text-sm font-medium text-gray-900">Fornecedor:</label>
+                        <select id="fkIdFornecedor" name="fkIdFornecedor"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5">
+                            <?php
+                            $fornecedores = $conexao->query("SELECT idFornecedor, nomeFornecedor FROM fornecedor");
+                            while ($fornecedor = $fornecedores->fetch_assoc()) {
+                                echo "<option value=\"{$fornecedor['idFornecedor']}\">{$fornecedor['nomeFornecedor']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
 
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Marca:</label>
                         <input type="text" name="marcaProduto" required
                             class="block w-full p-2 mt-1 border border-gray-300 rounded-md" />
                     </div>
+
 
                     <div class="sm:col-span-2">
                         <label for="descricaoProduto"

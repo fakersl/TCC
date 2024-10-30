@@ -1,6 +1,7 @@
 <?php
 session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -72,6 +73,15 @@ session_start();
                                 clip-rule="evenodd" />
                         </svg>
                     </a>
+
+                    <?php if (isset($_SESSION['usuario_nome']) && isset($_SESSION['usuario_email'])): ?>
+                        <div class="text-sm text-gray-700">
+                            <span><?php echo htmlspecialchars($_SESSION['usuario_nome']); ?></span>
+                            <span class="text-gray-500">
+                                (<?php echo htmlspecialchars($_SESSION['usuario_email']); ?>)</span>
+                        </div>
+                    <?php endif; ?>
+
                     <button id="menu-toggle" class="block md:hidden">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                             class="size-6">

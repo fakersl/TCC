@@ -14,12 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt = $conexao->prepare("INSERT INTO cadastro (nome, email, cpf, cep, cidade, bairro, endereco, numero, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssssssss", $nome, $email, $cpf, $cep, $cidade, $bairro, $endereco, $numero, $senha);
-    
+
     if ($stmt->execute()) {
         header("Location: login.php");
         exit();
     } else {
-        echo "Erro ao cadastrar usuário." . $stmt->error;
+        echo "Erro ao cadastrar usuário: " . $stmt->error;
     }
 }
 ?>
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div>
                     <label for="endereco"
                         class="block text-sm font-medium text-gray-700 dark:text-gray-300">Endereço:</label>
-                    <input type="text" id="logradouro" name="endereco"
+                    <input type="text" id="endereco" name="endereco"
                         class="w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
                         placeholder="Seu endereço" required>
                 </div>
@@ -118,10 +118,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="relative mb-6">
-                    <label for="password"
-                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Senha:</label>
+                    <label for="senha" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Senha:</label>
                     <div class="relative">
-                        <input type="password" id="password" name="password"
+                        <input type="password" id="senha" name="senha"
                             class="w-full px-4 py-2 pr-10 transition duration-200 ease-in-out bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-purple-600"
                             placeholder="*********" required>
                         <button type="button" onclick="togglePassword()"
@@ -131,16 +130,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.478 0-8.268-2.943-9.542-7z" />
+                                    d="M2.458 12C3.732 7.943 7.438 4.5 12 4.5c4.562 0 8.268 3.443 9.542 7.5M2.458 12c1.274 4.057 4.98 7.5 9.542 7.5 4.562 0 8.268-3.443 9.542-7.5M9 12a3 3 0 006 0" />
                             </svg>
                         </button>
-
                     </div>
                 </div>
             </div>
 
-            <button type="submit"
-                class="w-full px-4 py-2 font-medium text-white bg-purple-500 rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-600">Cadastrar!</button>
+            <div>
+                <button type="submit"
+                    class="w-full px-4 py-2 text-lg font-bold text-white transition duration-200 ease-in-out bg-purple-600 rounded-lg hover:bg-purple-500 focus:outline-none">Cadastrar</button>
+            </div>
         </form>
     </div>
     <script>

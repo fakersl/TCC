@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $precoProduto = filter_var($_POST['precoProduto'], FILTER_VALIDATE_FLOAT);
     $categoriaProduto = htmlspecialchars(trim($_POST['categoriaProduto']));
     $marcaProduto = htmlspecialchars(trim($_POST['marcaProduto']));
-    $fkIdFornecedor = htmlspecialchars(trim($_POST['fkIdFornecedor']));
+    $fkIdFornecedor = isset($_POST['fkIdFornecedor']) ? $_POST['fkIdFornecedor'] : null;
 
     // Verifique se o preço é válido
     if ($precoProduto === false) {
@@ -16,6 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: criar_produto.php");
         exit();
     }
+
+    // Verifique se o fornecedor existe
+    $stmt = $conexao->prepare("SELECT COUNT(*) FROM fornecedor WHERE idFornecedor = ?");
+    $stmt->bind_param("i", $fkIdFornecedor);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
 
     // Verifique se o arquivo foi enviado e é válido
     if (isset($_FILES['imagemProduto']) && $_FILES['imagemProduto']['error'] == 0) {
@@ -25,24 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nomeArquivo = $nomeOriginal . '.' . $extensao;
         $caminhoCompleto = $diretorio . $nomeArquivo;
 
-        // Verifique se o arquivo já existe
-        if (!file_exists($caminhoCompleto)) {
-            // Mover o arquivo para o diretório
-            if (move_uploaded_file($_FILES['imagemProduto']['tmp_name'], $caminhoCompleto)) {
-                $stmt = $conexao->prepare("INSERT INTO produto (nomeProduto, precoProduto, categoriaProduto, marcaProduto, imagemProduto, fkIdFornecedor) VALUES (?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("sdsssi", $nomeProduto, $precoProduto, $categoriaProduto, $marcaProduto, $nomeArquivo, $fkIdFornecedor);
-
-                if ($stmt->execute()) {
-                    header("Location: listar_produtos.php");
-                    exit();
-                } else {
-                    $_SESSION['error'] = "Erro ao adicionar produto.";
-                }
-            } else {
-                $_SESSION['error'] = "Erro ao mover o arquivo.";
-            }
-        } else {
-            // Se o arquivo já existir, utilize o nome do arquivo existente
+        // Mover o arquivo para o diretório
+        if (move_uploaded_file($_FILES['imagemProduto']['tmp_name'], $caminhoCompleto)) {
+            // Inserir o produto
             $stmt = $conexao->prepare("INSERT INTO produto (nomeProduto, precoProduto, categoriaProduto, marcaProduto, imagemProduto, fkIdFornecedor) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("sdsssi", $nomeProduto, $precoProduto, $categoriaProduto, $marcaProduto, $nomeArquivo, $fkIdFornecedor);
 
@@ -52,6 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 $_SESSION['error'] = "Erro ao adicionar produto.";
             }
+        } else {
+            $_SESSION['error'] = "Erro ao mover o arquivo.";
         }
     } else {
         $_SESSION['error'] = "Erro no upload do arquivo.";
@@ -61,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 

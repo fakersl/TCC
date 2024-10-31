@@ -7,19 +7,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $senha = $_POST['senha'];
 
     // Preparar a consulta
-    $stmt = $conexao->prepare("SELECT id_cadastro, nome, senha FROM cadastro WHERE email = ?");
+    $stmt = $conexao->prepare("SELECT id_cadastro, nome, email, senha FROM cadastro WHERE email = ?"); // Adicionando 'email' à consulta
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id_cadastro, $nome, $hash_senha);
+        $stmt->bind_result($id_cadastro, $nome, $email, $hash_senha); // Adicione o email aqui
         $stmt->fetch();
 
         // Verificação da senha usando password_verify
         if (password_verify($senha, $hash_senha)) {
             $_SESSION['id_cadastro'] = $id_cadastro;
             $_SESSION['nome'] = $nome;
+            $_SESSION['email'] = $email; // Armazenando o email na sessão
 
             header("Location: index.php?login=sucesso");
             exit();
@@ -43,7 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body class="flex items-center justify-center min-h-screen bg-gray-100 select-none dark:bg-gray-900 dark:text-white">
-    <div class="flex flex-col w-full max-w-4xl overflow-hidden bg-white rounded-lg shadow-md md:flex-row dark:bg-gray-800">
+    <div
+        class="flex flex-col w-full max-w-4xl overflow-hidden bg-white rounded-lg shadow-md md:flex-row dark:bg-gray-800">
         <div class="w-full p-8 md:w-1/2">
             <div class="flex justify-center mb-8">
                 <img id="logo" src="../../public/assets/Logo.svg" alt="Logo" class="w-20 h-20">
@@ -56,7 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <form action="login.php" method="POST">
                 <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">E-mail:</label>
+                    <label for="email"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">E-mail:</label>
                     <input type="email" id="email" name="email"
                         value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
                         class="w-full px-4 py-2 leading-tight bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:bg-white dark:focus:bg-gray-700 focus:border-purple-600"

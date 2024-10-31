@@ -205,7 +205,9 @@ $resultado = $conexao->query($sql);
                         </td>
                         <td class="px-4 py-3"><?php echo $produto['categoriaProduto']; ?></td>
                         <td class="px-4 py-3"><?php echo $produto['marcaProduto']; ?></td>
-                        <td class="px-4 py-3"><?php echo $produto['descricaoProduto']; ?></td>
+                        <td class="px-4 py-3">
+                            <?php echo substr($produto['descricaoProduto'], 0, 50) . (strlen($produto['descricaoProduto']) > 50 ? '...' : ''); ?>
+                        </td>
                         <td class="px-4 py-3">
                             <img src="/Tcc/public/uploads/<?php echo htmlspecialchars($produto['imagemProduto']); ?>"
                                 alt="<?php echo htmlspecialchars($produto['nomeProduto']); ?>"

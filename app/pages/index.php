@@ -2,14 +2,12 @@
 session_start();
 include("../../backend/conexao.php");
 
-if (!isset($_SESSION['id_cadastro'])) {
-    header("Location: login.php");
-    exit();
-}
-
+// Mensagem de boas-vindas
 $mensagem_bem_vindo = "";
-if (isset($_GET['login']) && $_GET['login'] === 'sucesso') {
-    $mensagem_bem_vindo = "Bem-vindo, " . htmlspecialchars($_SESSION['nome']) . "!";
+if (isset($_SESSION['id_cadastro'])) {
+    $mensagem_bem_vindo = "Olá, " . htmlspecialchars($_SESSION['nome']) . "!";
+} else {
+    $mensagem_bem_vindo = "Registre-se ou faça login para acessar as funcionalidades.";
 }
 ?>
 
@@ -101,7 +99,14 @@ if (isset($_GET['login']) && $_GET['login'] === 'sucesso') {
                             <div data-popper-arrow></div>
                         </div>
                     </div>
-
+                    <span class="ml-2 text-gray-800">
+                        <?php if (isset($_SESSION['id_cadastro'])): ?>
+                            Olá, <?php echo htmlspecialchars($_SESSION['nome']); ?>
+                        <?php else: ?>
+                            <a href="./login.php" class="text-purple-600 hover:underline">Entre</a> ou
+                            <a href="./cadastro.php" class="text-purple-600 hover:underline">registre-se</a>
+                        <?php endif; ?>
+                    </span>
 
                     <button id="menu-toggle" class="block md:hidden">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"

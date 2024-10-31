@@ -1,4 +1,7 @@
 <?php
+session_start();
+include("../../backend/conexao.php");
+
 // Função para manipular cookies
 function setCarrinhoCookie($carrinho) {
     setcookie('carrinho', json_encode($carrinho), time() + (86400 * 30), "/"); // 30 dias
@@ -16,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['adicionar'])) {
     $idProduto = $_POST['idProduto'];
     $quantidade = $_POST['quantidade'];
 
-    // Aqui você deve obter os detalhes do produto do banco de dados
+    // Obter detalhes do produto do banco de dados
     $query = "SELECT nomeProduto, precoProduto FROM produto WHERE idProduto = ?";
     $stmt = $conexao->prepare($query);
     $stmt->bind_param("i", $idProduto);
@@ -25,20 +28,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['adicionar'])) {
     $produto = $result->fetch_assoc();
 
     if ($produto) {
-        // Verifica se os campos estão definidos
-        if (isset($produto['nomeProduto']) && isset($produto['precoProduto'])) {
+        if (isset($produto['nomeProduto'], $produto['precoProduto'])) {
             if (isset($carrinho[$idProduto])) {
                 // Atualiza a quantidade se já estiver no carrinho
-                $carrinho[$idProduto]['quantidade'] += $quantidade;
+                $carrinho[$idProduto]['quantidade'] += intval($quantidade);
             } else {
                 // Adiciona novo produto ao carrinho
                 $carrinho[$idProduto] = [
                     'nome' => $produto['nomeProduto'],
-                    'preco' => $produto['precoProduto'],
-                    'quantidade' => $quantidade
+                    'preco' => floatval($produto['precoProduto']), // Garantir que o preço é um float
+                    'quantidade' => intval($quantidade)
                 ];
             }
+        } else {
+            echo "Erro: Nome ou preço do produto não encontrados.";
         }
+    } else {
+        echo "Erro: Produto não encontrado.";
     }
 
     setCarrinhoCookie($carrinho); // Atualiza o cookie
@@ -49,9 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['adicionar'])) {
 // Cálculo do total
 $total = 0;
 foreach ($carrinho as $item) {
-    // Verifica se as chaves estão definidas antes de calcular
     if (isset($item['preco']) && isset($item['quantidade'])) {
         $total += $item['preco'] * $item['quantidade'];
+    } else {
+        echo "Erro: Produto sem preço ou quantidade.";
+        var_dump($item); // Debug: Mostra o item que está faltando
     }
 }
 ?>

@@ -35,8 +35,7 @@ if (!$produto) {
         <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
                 <div class="max-w-md mx-auto shrink-0 lg:max-w-lg">
-                    <img class="w-full" src="../../public/uploads/<?php echo htmlspecialchars($produto['imagemProduto']); ?>"
-                        alt="<?php echo htmlspecialchars($produto['nomeProduto']); ?>" />
+                    <img class="w-full" src="../../public/uploads/<?php echo htmlspecialchars($produto['imagemProduto']); ?>" alt="<?php echo htmlspecialchars($produto['nomeProduto']); ?>" />
                 </div>
 
                 <div class="mt-6 sm:mt-8 lg:mt-0">
@@ -49,9 +48,9 @@ if (!$produto) {
                         </p>
                     </div>
 
-                    <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8 ">
+                    <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
                         <a href="javascript:void(0);"
-                            onclick="adicionarAoCarrinho(<?php echo $produto['idProduto']; ?>, '<?php echo addslashes($produto['nomeProduto']); ?>', '<?php echo addslashes($produto['descricaoProduto']); ?>', '<?php echo "../../public/uploads/" . $produto['imagemProduto']; ?>')"
+                            onclick="adicionarAoCarrinho(<?php echo $produto['idProduto']; ?>, '<?php echo addslashes($produto['nomeProduto']); ?>', '<?php echo addslashes($produto['descricaoProduto']); ?>', '<?php echo "../../public/uploads/" . $produto['imagemProduto']; ?>', <?php echo $produto['precoProduto']; ?>)"
                             class="text-white mt-4 sm:mt-0 bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center">
                             Adicionar ao Carrinho
                         </a>
@@ -66,8 +65,7 @@ if (!$produto) {
         </p>
     </section>
 
-    <div id="sidebar"
-        class="fixed top-0 left-0 z-50 w-64 h-full transition-transform duration-300 transform -translate-x-full bg-white shadow-lg">
+    <div id="sidebar" class="fixed top-0 left-0 z-50 w-64 h-full transition-transform duration-300 transform -translate-x-full bg-white shadow-lg">
         <div class="p-4">
             <button id="close-sidebar" class="text-gray-900" onclick="fecharSidebar()">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,20 +84,20 @@ if (!$produto) {
     <div id="overlay" class="fixed top-0 left-0 hidden w-full h-full bg-gray-900 bg-opacity-50"></div>
 
     <script>
-        function adicionarAoCarrinho(idProduto, nomeProduto, descricaoProduto, imagemProduto) {
+        function adicionarAoCarrinho(idProduto, nomeProduto, descricaoProduto, imagemProduto, precoProduto) {
             const carrinho = getCarrinho();
             const produto = {
                 id: idProduto,
                 nome: nomeProduto,
                 descricao: descricaoProduto,
-                imagem: imagemProduto
+                imagem: imagemProduto,
+                preco: precoProduto,
+                quantidade: 1
             };
 
-            // Adiciona o produto ao carrinho ou atualiza a quantidade
             if (carrinho[idProduto]) {
                 carrinho[idProduto].quantidade += 1;
             } else {
-                produto.quantidade = 1;
                 carrinho[idProduto] = produto;
             }
 
@@ -140,6 +138,7 @@ if (!$produto) {
                     <div class="flex-1">
                         <h3 class="text-sm font-semibold">${produto.nome}</h3>
                         <p class="text-xs text-gray-500">Quantidade: ${produto.quantidade}</p>
+                        <p class="text-xs text-gray-500">Preço: R$${(produto.preco * produto.quantidade).toFixed(2).replace('.', ',')}</p>
                     </div>
                     <button onclick="removerDoCarrinho('${id}')" class="text-red-600 hover:underline">Remover</button>
                 `;
@@ -148,11 +147,13 @@ if (!$produto) {
         }
 
         function removerDoCarrinho(idProduto) {
-            const carrinho = getCarrinho();
-            delete carrinho[idProduto]; // Remove o produto do carrinho
-            setCarrinho(carrinho); // Atualiza o cookie
-            atualizarListaCarrinho(); // Atualiza a lista
-            alert('Produto removido do carrinho!');
+            if (confirm("Tem certeza que deseja remover este produto do carrinho?")) {
+                const carrinho = getCarrinho();
+                delete carrinho[idProduto]; // Remove o produto do carrinho
+                setCarrinho(carrinho); // Atualiza o cookie
+                atualizarListaCarrinho(); // Atualiza a lista
+                alert('Produto removido do carrinho!');
+            }
         }
 
         function abrirSidebar() {

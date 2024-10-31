@@ -65,7 +65,8 @@ $resultado = $conexao->query($sql);
 
                         <ul class="py-1" role="none">
                             <li>
-                                <a href="../CRUD/listar_produtos.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                                <a href="../CRUD/listar_produtos.html"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                                     role="menuitem">Dashboard</a>
                             </li>
                             <li>
@@ -126,8 +127,7 @@ $resultado = $conexao->query($sql);
                         <a href="../CRUD/criar_produtos.php"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Adicionar
                             Produto</a>
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Lista
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Lista
                             de Produtos</a>
                     </div>
 
@@ -151,7 +151,8 @@ $resultado = $conexao->query($sql);
                     </a>
                 </li>
                 <li>
-                    <a href="cadastrar_forn.php" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 ">
+                    <a href="cadastrar_forn.php"
+                        class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 ">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 "
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 18">
@@ -205,7 +206,11 @@ $resultado = $conexao->query($sql);
                         <td class="px-4 py-3"><?php echo $produto['categoriaProduto']; ?></td>
                         <td class="px-4 py-3"><?php echo $produto['marcaProduto']; ?></td>
                         <td class="px-4 py-3"><?php echo $produto['descricaoProduto']; ?></td>
-                        <td class="px-4 py-3"><?php echo $produto['imagemProduto']; ?></td>
+                        <td class="px-4 py-3">
+                            <img src="/Tcc/public/uploads/<?php echo htmlspecialchars($produto['imagemProduto']); ?>"
+                                alt="<?php echo htmlspecialchars($produto['nomeProduto']); ?>"
+                                class="object-cover w-16 h-16">
+                        </td>
                         <td class="px-4 py-3">
                             <a href="editar_produtos.php?id=<?php echo $produto['idProduto']; ?>"
                                 class="text-purple-500 hover:underline">Editar</a>

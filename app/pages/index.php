@@ -1,5 +1,16 @@
 <?php
 session_start();
+include("../../backend/conexao.php");
+
+if (!isset($_SESSION['id_cadastro'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$mensagem_bem_vindo = "";
+if (isset($_GET['login']) && $_GET['login'] === 'sucesso') {
+    $mensagem_bem_vindo = "Bem-vindo, " . htmlspecialchars($_SESSION['nome']) . "!";
+}
 ?>
 
 <!DOCTYPE html>
@@ -65,22 +76,32 @@ session_start();
                         </svg>
 
                     </a>
-                    <a href="./login.php" class="w-6 h-6 ">
-                        <svg class="w-6 h-6 hover:text-purple-500" id="icone" alt="Usuario"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </a>
 
-                    <?php if (isset($_SESSION['usuario_nome']) && isset($_SESSION['usuario_email'])): ?>
-                        <div class="text-sm text-gray-700">
-                            <span><?php echo htmlspecialchars($_SESSION['usuario_nome']); ?></span>
-                            <span class="text-gray-500">
-                                (<?php echo htmlspecialchars($_SESSION['usuario_email']); ?>)</span>
+                    <div class="relative">
+                        <!--Icone do perfil-->
+                        <a href="#" id="profile-icon" class="relative w-6 h-6" data-popover-target="popover-bottom"
+                            data-popover-placement="bottom">
+                            <svg class="w-6 h-6 hover:text-purple-500" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <!--Popover-->
+                        <div data-popover id="popover-bottom" role="tooltip"
+                            class="absolute z-10 invisible inline-block w-48 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                            <div class="px-3 py-2">
+                                <a href="./perfil.php"
+                                    class="block font-semibold text-gray-900 dark:text-white hover:text-purple-700">Ver
+                                    Perfil</a>
+                                <a href="./logout.php"
+                                    class="block mt-2 font-semibold text-gray-900 dark:text-white hover:text-purple-700">Sair</a>
+                            </div>
+                            <div data-popper-arrow></div>
                         </div>
-                    <?php endif; ?>
+                    </div>
+
 
                     <button id="menu-toggle" class="block md:hidden">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -127,6 +148,25 @@ session_start();
     include("./produtosIndex.php");
     include("./footer.php");
     ?>
+    <script>
+        const profileButton = document.getElementById('profile-button');
+        const popover = document.getElementById('popover-bottom');
+
+        profileButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            popover.classList.toggle('hidden');
+            popover.classList.toggle('opacity-100'); // Para suavizar a transição
+        });
+
+        // Fecha o popover se clicar fora dele
+        window.addEventListener('click', function (event) {
+            if (!profileButton.contains(event.target) && !popover.contains(event.target)) {
+                popover.classList.add('hidden');
+                popover.classList.remove('opacity-100');
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
 </body>
 
 </html>

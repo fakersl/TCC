@@ -150,7 +150,6 @@ if (isset($_SESSION['id_cadastro'])) {
     <?php
     include("./carrossel.php");
     include("./produtosIndex.php");
-    include("./produtosIndex.php");
     include("./footer.php");
     ?>
     <script>

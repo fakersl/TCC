@@ -21,6 +21,7 @@ if (!$produto) {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,7 +36,9 @@ if (!$produto) {
         <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
                 <div class="max-w-md mx-auto shrink-0 lg:max-w-lg">
-                    <img class="w-full" src="../../public/uploads/<?php echo htmlspecialchars($produto['imagemProduto']); ?>" alt="<?php echo htmlspecialchars($produto['nomeProduto']); ?>" />
+                    <img class="w-full"
+                        src="../../public/uploads/<?php echo htmlspecialchars($produto['imagemProduto']); ?>"
+                        alt="<?php echo htmlspecialchars($produto['nomeProduto']); ?>" />
                 </div>
 
                 <div class="mt-6 sm:mt-8 lg:mt-0">
@@ -65,11 +68,13 @@ if (!$produto) {
         </p>
     </section>
 
-    <div id="sidebar" class="fixed top-0 left-0 z-50 w-64 h-full transition-transform duration-300 transform -translate-x-full bg-white shadow-lg">
+    <div id="sidebar"
+        class="fixed top-0 left-0 z-50 w-64 h-full transition-transform duration-300 transform -translate-x-full bg-white shadow-lg">
         <div class="p-4">
             <button id="close-sidebar" class="text-gray-900" onclick="fecharSidebar()">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
                 </svg>
             </button>
             <h2 class="mt-6 font-semibold text-gray-900">Produtos no Carrinho:</h2>
@@ -109,11 +114,23 @@ if (!$produto) {
 
         function getCarrinho() {
             const carrinhoJSON = getCookie('carrinho');
-            return carrinhoJSON ? JSON.parse(carrinhoJSON) : {};
+            if (carrinhoJSON) {
+                try {
+                    return JSON.parse(decodeURIComponent(carrinhoJSON));
+                } catch (e) {
+                    console.error("Erro ao analisar o cookie do carrinho:", e);
+                    return {}; // Retorna um objeto vazio se o JSON não for válido
+                }
+            }
+            return {};
         }
 
         function setCarrinho(carrinho) {
-            document.cookie = "carrinho=" + JSON.stringify(carrinho) + "; path=/; max-age=" + (86400 * 30);
+            const diasParaExpirar = 365 * 10; // 10 anos
+            const dataExpiracao = new Date();
+            dataExpiracao.setTime(dataExpiracao.getTime() + (diasParaExpirar * 24 * 60 * 60 * 1000));
+
+            document.cookie = `carrinho=${encodeURIComponent(JSON.stringify(carrinho))}; expires=${dataExpiracao.toUTCString()}; path=/;`;
         }
 
         function getCookie(name) {
@@ -134,14 +151,14 @@ if (!$produto) {
                 const li = document.createElement('li');
                 li.className = 'flex items-center justify-between space-x-4';
                 li.innerHTML = `
-                    <img class="w-16 h-16" src="${produto.imagem}" alt="${produto.nome}" />
-                    <div class="flex-1">
-                        <h3 class="text-sm font-semibold">${produto.nome}</h3>
-                        <p class="text-xs text-gray-500">Quantidade: ${produto.quantidade}</p>
-                        <p class="text-xs text-gray-500">Preço: R$${(produto.preco * produto.quantidade).toFixed(2).replace('.', ',')}</p>
-                    </div>
-                    <button onclick="removerDoCarrinho('${id}')" class="text-red-600 hover:underline">Remover</button>
-                `;
+                <img class="w-16 h-16" src="${produto.imagem}" alt="${produto.nome}" />
+                <div class="flex-1">
+                    <h3 class="text-sm font-semibold">${produto.nome}</h3>
+                    <p class="text-xs text-gray-500">Quantidade: ${produto.quantidade}</p>
+                    <p class="text-xs text-gray-500">Preço: R$${(produto.preco * produto.quantidade).toFixed(2).replace('.', ',')}</p>
+                </div>
+                <button onclick="removerDoCarrinho('${id}')" class="text-red-600 hover:underline">Remover</button>
+            `;
                 listaCarrinho.appendChild(li);
             }
         }
@@ -168,5 +185,7 @@ if (!$produto) {
 
         document.getElementById('overlay').addEventListener('click', fecharSidebar);
     </script>
+
 </body>
+
 </html>

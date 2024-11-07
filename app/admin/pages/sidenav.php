@@ -83,6 +83,7 @@ session_start();
         aria-label="Sidebar">
         <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
+                <!--dashboard-->
                 <li>
                     <a href="#"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -97,29 +98,32 @@ session_start();
                         <span class="ms-3">Dashboard</span>
                     </a>
                 </li>
+
+                <!-- Produtos -->
                 <li>
-                    <!-- Botão de dropdown -->
+                    <!-- Botão de dropdown para Produtos -->
                     <button type="button"
                         class="flex items-center w-full p-3 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                        aria-controls="dropdown-example" data-collapse-toggle="dropdown-example" aria-expanded="false"
-                        id="dropdown-button">
+                        aria-controls="dropdown-produtos" data-collapse-toggle="dropdown-produtos" aria-expanded="false"
+                        onclick="toggleDropdown('dropdown-produtos', 'arrow-produtos')">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z"
                                 clip-rule="evenodd" />
                         </svg>
 
                         <span class="flex-1 text-left ms-3 whitespace-nowrap">Produtos</span>
-                        <svg class="w-3 h-3 transition-transform duration-300" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" id="arrow-icon">
+                        <!-- Ícone da seta com rotação animada -->
+                        <svg id="arrow-produtos" class="w-3 h-3 transition-transform duration-300 transform"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 1 4 4 4-4"></path>
                         </svg>
                     </button>
 
-                    <!-- Conteúdo do dropdown -->
-                    <div id="dropdown-example" class="hidden mt-2 space-y-2">
+                    <!-- Conteúdo do dropdown para Produtos -->
+                    <div id="dropdown-produtos" class="hidden mt-2 space-y-2">
                         <a href="./CRUD/criar_produtos.php"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Adicionar
                             Produto</a>
@@ -128,12 +132,12 @@ session_start();
                             de Produtos</a>
                         <a href="#"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Categorias</a>
-
                     </div>
-
                 </li>
+
+                <!--transações-->
                 <li>
-                    <a href="#"
+                    <a href="listar_transacoes.php"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
@@ -144,13 +148,13 @@ session_start();
                             <path
                                 d="M2.25 18a.75.75 0 0 0 0 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 0 0-.75-.75H2.25Z" />
                         </svg>
-
-
                         <span class="flex-1 ms-3 whitespace-nowrap">Transações</span>
                         <span
-                            class="inline-flex items-center justify-center w-3 h-3 p-3 text-sm font-medium text-purple-800 bg-purple-100 rounded-full ms-3 dark:bg-purple-900 dark:text-purple-300">3</span>
+                            class="inline-flex items-center justify-center w-3 h-3 p-3 text-sm font-medium text-purple-800 bg-purple-100 rounded-full ms-3 dark:bg-purple-900 dark:text-purple-300">0</span>
                     </a>
                 </li>
+
+                <!--fornecedores-->
                 <li>
                     <a href="./CRUD/cadastrar_forn.php"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -163,17 +167,40 @@ session_start();
                         <span class="flex-1 ms-3 whitespace-nowrap">Fornecedores</span>
                     </a>
                 </li>
+
+                <!-- Coleções -->
                 <li>
-                    <a href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 18 20">
-                            <path
-                                d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
+                    <!-- Botão de dropdown para Coleções -->
+                    <button type="button"
+                        class="flex items-center w-full p-3 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        aria-controls="dropdown-colecoes" data-collapse-toggle="dropdown-colecoes"
+                        aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                            <path fill-rule="evenodd"
+                                d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z"
+                                clip-rule="evenodd" />
                         </svg>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
-                    </a>
+
+                        <span class="flex-1 text-left ms-3 whitespace-nowrap">Coleções</span>
+                        <svg class="w-3 h-3 transition-transform duration-300" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 4 4 4-4"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Conteúdo do dropdown para Coleções -->
+                    <div id="dropdown-colecoes" class="hidden mt-2 space-y-2">
+                        <a href="./CRUD/criar_produtos.php"
+                            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Adicionar
+                            Produto</a>
+                        <a href="./CRUD/listar_produtos.php"
+                            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Lista
+                            de Produtos</a>
+                        <a href="#"
+                            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Categorias</a>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -185,6 +212,17 @@ session_start();
         </div>
     </div>
     <script>
+        function toggleDropdown(dropdownId, arrowId) {
+            const dropdown = document.getElementById(dropdownId);
+            const arrow = document.getElementById(arrowId);
+
+            // Toggle a classe para mostrar ou ocultar o dropdown
+            dropdown.classList.toggle("hidden");
+
+            // Rotaciona a seta dependendo do estado do dropdown
+            arrow.classList.toggle("rotate-180");
+        }
+
         async function carregarGrafico() {
             const response = await fetch('dados_grafico.php');
             const dados = await response.json();

@@ -173,8 +173,9 @@ session_start();
                     <!-- Botão de dropdown para Coleções -->
                     <button type="button"
                         class="flex items-center w-full p-3 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                        aria-controls="dropdown-colecoes" data-collapse-toggle="dropdown-colecoes"
-                        aria-expanded="false">
+                        aria-controls="dropdown-colecoes" data-collapse-toggle="dropdown-colecoes" aria-expanded="false"
+                        onclick="toggleDropdownIcon('dropdown-colecoes-icon')">
+
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                             class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
                             <path fill-rule="evenodd"
@@ -183,8 +184,9 @@ session_start();
                         </svg>
 
                         <span class="flex-1 text-left ms-3 whitespace-nowrap">Coleções</span>
-                        <svg class="w-3 h-3 transition-transform duration-300" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+
+                        <svg id="dropdown-colecoes-icon" class="w-3 h-3 transition-transform duration-300 transform"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 1 4 4 4-4"></path>
                         </svg>
@@ -192,12 +194,12 @@ session_start();
 
                     <!-- Conteúdo do dropdown para Coleções -->
                     <div id="dropdown-colecoes" class="hidden mt-2 space-y-2">
-                        <a href="./CRUD/criar_produtos.php"
-                            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Adicionar
-                            Produto</a>
-                        <a href="./CRUD/listar_produtos.php"
-                            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Lista
-                            de Produtos</a>
+                        <a href="./CRUD/criar_colecoes.php"
+                            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+                            Adicionar Coleção</a>
+                        <ic href="./CRUD/listar_colecoes.php"
+                            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+                        Lista de Coleções </ic>
                         <a href="#"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Categorias</a>
                     </div>
@@ -223,29 +225,45 @@ session_start();
             arrow.classList.toggle("rotate-180");
         }
 
+        function toggleDropdownIcon(iconId) {
+            const icon = document.getElementById(iconId);
+            icon.classList.toggle("rotate-180"); // Adiciona/Remove a rotação de 180 graus
+        }
+
         async function carregarGrafico() {
             const response = await fetch('dados_grafico.php');
             const dados = await response.json();
 
-            //transformar os dados em label e data pro grafico
+            // Transformar os dados em labels e valores para o gráfico
             const labels = dados.map(item => item.categoria);
             const valores = dados.map(item => item.quantidade);
 
-            //criar o grafico
+            // Criar o gráfico
             const ctx = document.getElementById('meuGrafico').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Quantidade por Categoria',
+                        label: 'Quantidade de Produtos por Categoria',
                         data: valores,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     }]
                 },
                 options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff'
+                        }
+                    },
                     scales: {
                         y: {
                             beginAtZero: true
@@ -255,13 +273,13 @@ session_start();
             });
         }
 
-        window.onload = carregarGrafico;
+        // Chama a função para carregar o gráfico assim que a página carregar
+        document.addEventListener('DOMContentLoaded', carregarGrafico);
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
-        integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+    <script src="../../scripts/dropdowns.js"></script>
 </body>
 
 </html>

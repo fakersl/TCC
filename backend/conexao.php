@@ -14,6 +14,12 @@ $conexao->query("CREATE DATABASE IF NOT EXISTS bancoRocketStore");
 $conexao->select_db("bancoRocketStore");
 
 // Criar tabelas
+
+$conexao->query("CREATE TABLE IF NOT EXISTS colecoes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL
+)");
+
 $conexao->query("CREATE TABLE IF NOT EXISTS endereco (
     idEndereco INT PRIMARY KEY AUTO_INCREMENT,
     rua VARCHAR(150) NOT NULL,
@@ -74,7 +80,9 @@ $conexao->query("CREATE TABLE IF NOT EXISTS produto (
     descricaoProduto VARCHAR(100) NOT NULL,
     imagemProduto MEDIUMBLOB,
     fkIdFornecedor INT NOT NULL,
-    FOREIGN KEY (fkIdFornecedor) REFERENCES fornecedor(idFornecedor) ON DELETE CASCADE
+    fkIdColecao INT NOT NULL,
+    FOREIGN KEY (fkIdFornecedor) REFERENCES fornecedor(idFornecedor) ON DELETE CASCADE,
+    FOREIGN KEY (fkIdColecao) REFERENCES colecoes(idColecao) ON DELETE CASCADE
 )");
 
 $conexao->query("CREATE TABLE IF NOT EXISTS carrinho (

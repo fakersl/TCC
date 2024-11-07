@@ -2,8 +2,23 @@
 session_start();
 include("../../../../backend/conexao.php");
 
-// Consultar todas as coleções do banco de dados
-$result = $conexao->query("SELECT idColecao, nomeColecao, descricaoColecao FROM colecoes");
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nomeColecao = htmlspecialchars(trim($_POST['nomeColecao']));
+    $descricaoColecao = htmlspecialchars(trim($_POST['descricaoColecao']));
+
+    // Inserir a nova coleção no banco de dados
+    $stmt = $conexao->prepare("INSERT INTO colecoes (nomeColecao, descricaoColecao) VALUES (?, ?)");
+    $stmt->bind_param("ss", $nomeColecao, $descricaoColecao);
+
+    if ($stmt->execute()) {
+        header("Location: listar_colecoes.php");
+        exit();
+    } else {
+        $_SESSION['error'] = "Erro ao adicionar coleção.";
+        header("Location: criar_colecoes.php");
+        exit();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +26,7 @@ $result = $conexao->query("SELECT idColecao, nomeColecao, descricaoColecao FROM 
 
 <head>
     <meta charset="UTF-8">
-    <title>Listar Coleções</title>
+    <title>Criar Coleção</title>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
 </head>
 
@@ -128,7 +143,7 @@ $result = $conexao->query("SELECT idColecao, nomeColecao, descricaoColecao FROM 
 
                     <!-- Conteúdo do dropdown para Produtos -->
                     <div id="dropdown-produtos" class="hidden mt-2 space-y-2">
-                        <a href="./criar_produtos.php"
+                        <a href="./CRUD/criar_produtos.php"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Adicionar
                             Produto</a>
                         <a href="./CRUD/listar_produtos.php"
@@ -160,7 +175,7 @@ $result = $conexao->query("SELECT idColecao, nomeColecao, descricaoColecao FROM 
 
                 <!--fornecedores-->
                 <li>
-                    <a href="./cadastrar_forn.php"
+                    <a href="./CRUD/cadastrar_forn.php"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -201,7 +216,7 @@ $result = $conexao->query("SELECT idColecao, nomeColecao, descricaoColecao FROM 
                         <a href="./CRUD/criar_colecoes.php"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
                             Adicionar Coleção</a>
-                        <ic href="#"
+                        <ic href="./CRUD/listar_colecoes.php"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
                             Lista de Coleções </ic>
                         <a href="#"
@@ -215,30 +230,26 @@ $result = $conexao->query("SELECT idColecao, nomeColecao, descricaoColecao FROM 
     <!-- Conteúdo principal -->
     <div class="p-4 sm:ml-64">
         <div class="p-4 mt-14">
-            <h1 class="mb-4 text-2xl font-bold">Lista de Coleções</h1>
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-100">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">ID</th>
-                        <th scope="col" class="px-6 py-3">Nome da Coleção</th>
-                        <th scope="col" class="px-6 py-3">Descrição da Coleção</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($colecao = $result->fetch_assoc()): ?>
-                        <tr class="bg-white border-b hover:bg-gray-100">
-                            <td class="px-6 py-4"><?php echo $colecao['idColecao']; ?></td>
-                            <td class="px-6 py-4"><?php echo htmlspecialchars($colecao['nomeColecao']); ?></td>
-                            <td class="px-6 py-4"><?php echo htmlspecialchars($colecao['descricaoColecao']); ?></td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
+            <h1 class="mb-4 text-2xl font-bold">Adicionar Coleção</h1>
+            <form method="POST">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Nome da Coleção:</label>
+                    <input type="text" name="nomeColecao" required
+                        class="block w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500" />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Descrição da coleção:</label>
+                    <input type="text" name="descricaoColecao" required
+                        class="block w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500" />
+                </div>
+                <button type="submit"
+                    class="px-4 py-2 text-white transition duration-300 bg-purple-600 rounded-md hover:bg-purple-700">Criar
+                    Coleção</button>
+            </form>
         </div>
     </div>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 <script src="../../../scripts/dropdowns.js"></script>
-
 </html>

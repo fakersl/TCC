@@ -2,7 +2,10 @@
 session_start();
 include("../../../../backend/conexao.php");
 
-$sql = "SELECT * FROM produto";
+$sql = "SELECT p.*, c.nomeColecao 
+        FROM produto p
+        INNER JOIN colecoes c ON p.fkIdColecao = c.idColecao";
+
 $resultado = $conexao->query($sql);
 ?>
 
@@ -190,6 +193,7 @@ $resultado = $conexao->query($sql);
                     <th class="px-4 py-3 text-left">Preço</th>
                     <th class="px-4 py-3 text-left">Categoria</th>
                     <th class="px-4 py-3 text-left">Marca</th>
+                    <th class="px-4 py-3 text-left">Coleção</th>
                     <th class="px-4 py-3 text-left">Descrição</th>
                     <th class="px-4 py-3 text-left">Imagem</th>
                     <th class="px-4 py-3 text-left">Ações</th>
@@ -205,8 +209,8 @@ $resultado = $conexao->query($sql);
                         </td>
                         <td class="px-4 py-3"><?php echo $produto['categoriaProduto']; ?></td>
                         <td class="px-4 py-3"><?php echo $produto['marcaProduto']; ?></td>
-                        <td class="px-4 py-3">
-                            <?php echo substr($produto['descricaoProduto'], 0, 50) . (strlen($produto['descricaoProduto']) > 50 ? '...' : ''); ?>
+                        <td class="px-4 py-3"><?php echo $produto['nomeColecao']; ?></td>
+                        <td class="px-4 py-3"><?php echo $produto['descricaoProduto']; ?>
                         </td>
                         <td class="px-4 py-3">
                             <img src="/Tcc/public/uploads/<?php echo htmlspecialchars($produto['imagemProduto']); ?>"

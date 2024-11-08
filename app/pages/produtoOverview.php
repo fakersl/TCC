@@ -126,11 +126,7 @@ if (!$produto) {
         }
 
         function setCarrinho(carrinho) {
-            const diasParaExpirar = 365 * 10; // 10 anos
-            const dataExpiracao = new Date();
-            dataExpiracao.setTime(dataExpiracao.getTime() + (diasParaExpirar * 24 * 60 * 60 * 1000));
-
-            document.cookie = `carrinho=${encodeURIComponent(JSON.stringify(carrinho))}; expires=${dataExpiracao.toUTCString()}; path=/;`;
+            document.cookie = `carrinho=${encodeURIComponent(JSON.stringify(carrinho))}; path=/;`;
         }
 
         function getCookie(name) {

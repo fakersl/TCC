@@ -9,6 +9,59 @@ if (isset($_SESSION['id_cadastro'])) {
 } else {
     $mensagem_bem_vindo = "Registre-se ou faça login para acessar as funcionalidades.";
 }
+
+// Função para gerenciar o carrinho
+function getCarrinho()
+{
+    if (isset($_SESSION['id_cadastro'])) {
+        // Carrinho persistente na sessão para usuários logados
+        return $_SESSION['carrinho'] ?? [];
+    } else {
+        // Carrinho armazenado em cookies para usuários não logados
+        return json_decode($_COOKIE['carrinho'] ?? '[]', true);
+    }
+}
+
+function setCarrinho($carrinho)
+{
+    if (isset($_SESSION['id_cadastro'])) {
+        // Para usuários logados, o carrinho é salvo na sessão
+        $_SESSION['carrinho'] = $carrinho;
+    } else {
+        // Para usuários não logados, o carrinho é salvo em cookies
+        setcookie('carrinho', json_encode($carrinho), time() + (86400 * 7), "/"); // 7 dias
+    }
+}
+
+// Adicionar produto ao carrinho
+if (isset($_POST['action']) && $_POST['action'] == 'add_to_cart') {
+    $produto = [
+        'idProduto' => $_POST['idProduto'],
+        'quantidade' => $_POST['quantidade'],
+        'cor' => $_POST['cor'],
+        'tamanho' => $_POST['tamanho']
+    ];
+
+    $carrinho = getCarrinho();
+
+    $produtoExistente = false;
+    foreach ($carrinho as $key => $item) {
+        if ($item['idProduto'] == $produto['idProduto'] && $item['cor'] == $produto['cor'] && $item['tamanho'] == $produto['tamanho']) {
+            $carrinho[$key]['quantidade'] += $produto['quantidade']; // Soma a quantidade
+            $produtoExistente = true;
+            break;
+        }
+    }
+
+    if (!$produtoExistente) {
+        $carrinho[] = $produto; // Adiciona o novo produto
+    }
+
+    setCarrinho($carrinho); // Atualiza o carrinho
+
+    echo json_encode(['message' => 'Produto adicionado ao carrinho!']);
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,10 +79,10 @@ if (isset($_SESSION['id_cadastro'])) {
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
     <script>
-        window.onload = function () {
-            const popup = document.getElementById('welcome-popup');
+        const popup = document.getElementById('welcome-popup');
+        if (popup) {
             setTimeout(() => { popup.style.display = 'none'; }, 3000);
-        };
+        }
     </script>
 </head>
 
@@ -65,7 +118,7 @@ if (isset($_SESSION['id_cadastro'])) {
                         </svg>
 
                     </a>
-                    <a href="#" class="w-6 h-6" id="icon-sacola">
+                    <a href="carrinho.php" class="w-6 h-6" id="icon-sacola">
                         <svg class="w-6 h-6 hover:text-purple-500" id="icone" alt="Sacola"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path fill-rule="evenodd"
@@ -153,23 +206,99 @@ if (isset($_SESSION['id_cadastro'])) {
     include("./footer.php");
     ?>
     <script>
-        const profileButton = document.getElementById('profile-button');
-        const popover = document.getElementById('popover-bottom');
+        // Função para adicionar produto ao carrinho
+        function addToCart() {
+            const quantidade = document.getElementById("quantity").value;
+            const selectedColor = document.querySelector('input[name="color"]:checked');
+            const selectedSize = document.querySelector('input[name="size"]:checked');
 
-        profileButton.addEventListener('click', function (event) {
-            event.preventDefault();
-            popover.classList.toggle('hidden');
-            popover.classList.toggle('opacity-100'); // Para suavizar a transição
-        });
+            if (!selectedColor || !selectedSize) {
+                alert("Selecione uma cor e um tamanho antes de adicionar ao carrinho.");
+                return;
+            }
 
-        // Fecha o popover se clicar fora dele
+            const produto = {
+                idProduto: document.getElementById("productID").value,
+                quantidade: quantidade,
+                cor: selectedColor.value,
+                tamanho: selectedSize.value,
+            };
+
+            // Envia a requisição para o backend para adicionar o produto ao carrinho
+            fetch('carrinho.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'add_to_cart',
+                    ...produto
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Exibe a mensagem de sucesso
+                    alert(data.message);
+
+                    // Atualiza a lista de itens no carrinho
+                    atualizarListaCarrinho();
+
+                    // Abre a sidebar do carrinho
+                    openCartSidebar();
+                })
+                .catch(error => console.error('Erro ao adicionar ao carrinho:', error));
+        }
+
+        // Função para abrir a sidebar do carrinho
+        function openCartSidebar() {
+            document.getElementById("sidebar").classList.remove("translate-x-full");
+            document.getElementById("overlay").classList.remove("hidden");
+        }
+
+        // Função para fechar a sidebar do carrinho
+        function closeCartSidebar() {
+            document.getElementById("sidebar").classList.add("translate-x-full");
+            document.getElementById("overlay").classList.add("hidden");
+        }
+
+        // Função para atualizar a lista de produtos no carrinho
+        function atualizarListaCarrinho() {
+            fetch('carrinho.php', {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(carrinho => {
+                    const cartList = document.getElementById("cart-list");
+                    cartList.innerHTML = ''; // Limpa a lista atual
+
+                    // Preenche com os itens do carrinho
+                    if (carrinho.length === 0) {
+                        cartList.innerHTML = "<li>Seu carrinho está vazio.</li>";
+                    } else {
+                        carrinho.forEach(item => {
+                            const li = document.createElement("li");
+                            li.textContent = `Produto ID: ${item.idProduto} | Quantidade: ${item.quantidade} | Cor: ${item.cor} | Tamanho: ${item.tamanho}`;
+                            cartList.appendChild(li);
+                        });
+                    }
+                })
+                .catch(error => console.error('Erro ao carregar carrinho:', error));
+        }
+
+        // Função para fechar o popover se clicar fora
         window.addEventListener('click', function (event) {
+            const profileButton = document.getElementById('profile-icon'); // Botão de perfil
+            const popover = document.getElementById('popover-bottom'); // Popover
+
+            // Verifica se o clique foi fora do popover ou do botão de perfil
             if (!profileButton.contains(event.target) && !popover.contains(event.target)) {
-                popover.classList.add('hidden');
+                popover.classList.add('invisible');
                 popover.classList.remove('opacity-100');
             }
         });
+
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
 </body>
 

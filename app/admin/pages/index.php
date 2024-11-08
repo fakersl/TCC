@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Painel - RocketStore
                     </h1>
-                    <form class="space-y-4 md:space-y-6" method="POST" action="sidenav.php"> 
+                    <form class="space-y-4 md:space-y-6" method="POST" action="dashboard.php"> 
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail:</label>
                             <input type="email" name="email" id="email"
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="ml-3 text-sm">
                                 <label for="termos" class="font-light text-gray-500 dark:text-gray-300">Eu aceito os <a
                                         class="font-medium text-purple-600 hover:underline dark:text-purple-500"
-                                        href="../admin/termos-e-condicoes.php">Termos e condições</a></label>
+                                        href="./termos-e-condicoes.php">Termos e condições</a></label>
                             </div>
                         </div>
                         <button type="submit"
@@ -159,6 +159,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
 </body>
 </html>

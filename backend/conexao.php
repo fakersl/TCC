@@ -93,44 +93,12 @@ $conexao->query("CREATE TABLE IF NOT EXISTS produto (
     FOREIGN KEY (fkIdColecao) REFERENCES colecoes(idColecao) ON DELETE CASCADE
 )");
 
-// Tabela de carrinho
-$conexao->query("CREATE TABLE IF NOT EXISTS carrinho (
-    idCarrinho INT PRIMARY KEY AUTO_INCREMENT,
-    fkIdProduto INT NOT NULL,
-    fkIdCadastro INT NOT NULL,
-    dataCompra DATE NOT NULL,
-    statusPagamento VARCHAR(50),
-    tipoPagamento VARCHAR(50) NOT NULL,
-    FOREIGN KEY (fkIdProduto) REFERENCES produto(idProduto) ON DELETE CASCADE,
-    FOREIGN KEY (fkIdCadastro) REFERENCES cadastro(id_cadastro) ON DELETE CASCADE
-)");
-
 // Tabela de favoritos
 $conexao->query("CREATE TABLE IF NOT EXISTS favoritos (
     idFavorito INT PRIMARY KEY AUTO_INCREMENT,
     idUsuario INT,
     idProduto INT,
     FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario),
-    FOREIGN KEY (idProduto) REFERENCES produto(idProduto)
-)");
-
-// Tabela de transações
-$conexao->query("CREATE TABLE IF NOT EXISTS transacoes (
-    idTransacao INT PRIMARY KEY AUTO_INCREMENT,
-    idUsuario INT,
-    total DECIMAL(10, 2),
-    data DATE,
-    FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario)
-)");
-
-// Tabela de produtos das transações
-$conexao->query("CREATE TABLE IF NOT EXISTS transacoes_produtos (
-    idTransacaoProduto INT AUTO_INCREMENT PRIMARY KEY,
-    idTransacao INT,
-    idProduto INT,
-    quantidade INT,
-    preco DECIMAL(10, 2),
-    FOREIGN KEY (idTransacao) REFERENCES transacoes(idTransacao),
     FOREIGN KEY (idProduto) REFERENCES produto(idProduto)
 )");
 

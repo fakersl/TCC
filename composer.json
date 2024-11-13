@@ -1,0 +1,17 @@
+{
+    "name": "vendor/oauth",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/pages"
+        }
+    },
+    "authors": [
+        {
+            "name": "fakersl",
+            "email": "zgustovo13365@gmail.com"
+        }
+    ],
+    "require": {
+        "google/apiclient": "^2.18"
+    }
+}

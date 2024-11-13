@@ -1,5 +1,16 @@
 <?php
-session_start(); // Adicione isto no início do arquivo para garantir que a sessão esteja ativa
+session_start();
+require("../../vendor/autoload.php");
+
+$cliente = new Google_Client();
+$cliente->setClientId('755071431063-alpka3q8aohevbcvd5va7nrh16rtbifc.apps.googleusercontent.com'); // Seu Client ID
+$cliente->setClientSecret('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'); // Seu Client Secret
+$cliente->setRedirectUri('http://localhost/tcc/app/pages/callback.php'); // URI de redirecionamento
+$cliente->addScope("email");
+$cliente->addScope("profile");
+
+$loginUrl = $cliente->createAuthUrl(); // URL de login com Google
+
 include("../../backend/conexao.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -44,8 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body class="flex items-center justify-center min-h-screen bg-gray-100 select-none dark:bg-gray-900 dark:text-white">
-    <div
-        class="flex flex-col w-full max-w-4xl overflow-hidden bg-white rounded-lg shadow-md md:flex-row dark:bg-gray-800">
+    <div class="flex flex-col w-full max-w-4xl overflow-hidden bg-white rounded-lg shadow-md md:flex-row dark:bg-gray-800">
         <div class="w-full p-8 md:w-1/2">
             <div class="flex justify-center mb-8">
                 <img id="logo" src="../../public/assets/Logo.svg" alt="Logo" class="w-20 h-20">
@@ -58,8 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <form action="login.php" method="POST">
                 <div class="mb-4">
-                    <label for="email"
-                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">E-mail:</label>
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">E-mail:</label>
                     <input type="email" id="email" name="email"
                         value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
                         class="w-full px-4 py-2 leading-tight bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:bg-white dark:focus:bg-gray-700 focus:border-purple-600"
@@ -95,11 +104,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="mt-6">
-                <button
+                <a href="<?php echo $loginUrl; ?>"
                     class="flex items-center justify-center w-full px-4 py-2 bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
                     <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google" class="w-6 h-6 mr-2">
                     <span>Google</span>
-                </button>
+                </a>
             </div>
         </div>
         <div class="hidden md:block md:w-1/2">

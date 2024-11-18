@@ -125,10 +125,10 @@
                         <!-- Conteúdo do dropdown para Produtos -->
                         <div id="dropdown-produtos" class="hidden mt-2 space-y-2">
                             <a href="./CRUD/criar_produtos.php"
-                                class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Adicionar
+                                class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Adicionar
                                 Produto</a>
                             <a href="./CRUD/listar_produtos.php"
-                                class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Lista
+                                class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Lista
                                 de Produtos
                             </a>
                         </div>
@@ -161,11 +161,11 @@
                         <!-- Conteúdo do dropdown para Coleções -->
                         <div id="dropdown-colecoes" class="hidden mt-2 space-y-2">
                             <a href="./CRUD/criar_colecoes.php"
-                                class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
                                 Adicionar coleção
                             </a>
                             <a href="./CRUD/listar_colecoes.php"
-                                class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
                                 Lista de coleções
                             </a>
                         </div>
@@ -203,18 +203,18 @@
                         <!-- Conteúdo do dropdown para fornecedores -->
                         <div id="dropdown-fornecedores" class="hidden mt-2 space-y-2">
                             <a href="./CRUD/cadastrar_forn.php"
-                                class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
                                 Adicionar fornecedor
                             </a>
                             <a href="./CRUD/listar_fornecedores.php"
-                                class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
                                 Lista de fornecedores
                             </a>
                         </div>
                     </li>
 
                     <!--transações-->
-                    <li>
+                    <!-- <li>
                         <a href="listar_transacoes.php"
                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -231,7 +231,7 @@
                             <span
                                 class="inline-flex items-center justify-center w-3 h-3 p-3 text-sm font-medium text-purple-800 bg-purple-100 rounded-full ms-3 dark:bg-purple-900 dark:text-purple-300">0</span>
                         </a>
-                    </li>
+                    </li> -->
 
                 </ul>
             </div>

@@ -267,6 +267,15 @@ if (!$result) {
                             <td class="px-4 py-2 border-b"><?= htmlspecialchars($fornecedor['produtoFornecedor']) ?></td>
                             <td class="px-4 py-2 border-b"><?= htmlspecialchars($fornecedor['telefoneFornecedor']) ?></td>
                             <td class="px-4 py-2 border-b"><?= htmlspecialchars($fornecedor['rua']) ?></td>
+                            <td class="px-4 py-2">
+                                <!-- Botão Editar -->
+                                <a href="editar_forn.php?id=<?php echo $row['idFornecedor']; ?>"
+                                    class="text-blue-500 hover:underline">Editar</a>
+                                <!-- Botão Deletar -->
+                                <a href="deletar_forn.php?id=<?php echo $row['idFornecedor']; ?>"
+                                    class="ml-2 text-red-500 hover:underline"
+                                    onclick="return confirm('Tem certeza que deseja deletar este fornecedor?');">Deletar</a>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>

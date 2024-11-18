@@ -28,7 +28,7 @@
         <div class="max-w-xl p-6 text-center bg-white rounded-lg shadow-lg">
             
             <!-- Título -->
-            <h1 class="mb-4 text-4xl font-semibold text-gray-800">Estamos em Manutenção</h1>
+            <h1 class="mb-4 text-4xl font-semibold text-gray-800">Página em desenvolvimento...</h1>
 
             <!-- Descrição -->
             <p class="mb-4 text-lg text-gray-600">Estamos atualizando o site para melhorar sua experiência. Volte em breve!</p>

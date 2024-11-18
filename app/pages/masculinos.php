@@ -177,7 +177,7 @@ if (!$result) {
                         </ol>
                     </nav>
 
-                    <h2 class="mt-3 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Peças Femininas
+                    <h2 class="mt-3 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Peças Masculinas
                     </h2>
                 </div>
             </div>

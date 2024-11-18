@@ -26,11 +26,6 @@
 
     <div class="maintenance-container">
         <div class="max-w-xl p-6 text-center bg-white rounded-lg shadow-lg">
-            <!-- Ilustração de Manutenção -->
-            <div class="mb-6">
-                <img src="https://via.placeholder.com/400x300?text=Em+Manuten%C3%A7%C3%A3o" alt="Manutenção"
-                    class="w-full h-auto rounded-lg">
-            </div>
             
             <!-- Título -->
             <h1 class="mb-4 text-4xl font-semibold text-gray-800">Estamos em Manutenção</h1>
@@ -39,12 +34,12 @@
             <p class="mb-4 text-lg text-gray-600">Estamos atualizando o site para melhorar sua experiência. Volte em breve!</p>
 
             <!-- Botão para Voltar -->
-            <a href="/" class="inline-block px-6 py-3 font-semibold text-white transition duration-300 bg-purple-600 rounded-md hover:bg-purple-700">
+            <a href="index.php" class="inline-block px-6 py-3 font-semibold text-white transition duration-300 bg-purple-600 rounded-md hover:bg-purple-700">
                 Voltar à Página Inicial
             </a>
             
             <!-- Opcional: Informações de contato ou mais detalhes -->
-            <p class="mt-6 text-sm text-gray-500">Se precisar de ajuda, entre em contato conosco pelo <a href="mailto:support@rocketstore.com" class="text-purple-600 hover:underline">e-mail</a>.</p>
+            <p class="mt-6 text-sm text-gray-500">Se precisar de ajuda, entre em contato conosco pelo <a href="#" class="text-purple-600 hover:underline">e-mail</a>.</p>
         </div>
     </div>
 

@@ -4,7 +4,7 @@ require("../../vendor/autoload.php");
 $cliente = new Google_Client();
 $cliente->setClientId('755071431063-alpka3q8aohevbcvd5va7nrh16rtbifc.apps.googleusercontent.com'); // Client ID
 $cliente->setClientSecret('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'); // Client Secret
-$cliente->setRedirectUri('http://localhost/tcc/app/pages/callback.php'); // URI de redirecionamento
+$cliente->setRedirectUri('http://localhost/tccz/app/pages/callback.php'); // URI de redirecionamento
 
 if (isset($_GET['code'])) {
     // Troca o código de autenticação por um token de acesso

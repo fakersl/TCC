@@ -169,8 +169,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'add_to_cart') {
             <div class="justify-center hidden pt-3 space-x-8 border-t border-gray-200 md:flex">
                 <a href="./femininos.php" class="font-semibold text-gray-900 hover:text-purple-700">Feminino</a>
                 <a href="./masculinos.php" class="font-semibold text-gray-900 hover:text-purple-700">Masculino</a>
-                <a href="#" class="font-semibold text-gray-900 hover:text-purple-700">Promoções</a>
-                <a href="#" class="font-semibold text-gray-900 hover:text-purple-700">Mystery Boxes</a>
+                <a href="./manutencao.php" class="font-semibold text-gray-900 hover:text-purple-700">Promoções</a>
+                <a href="./manutencao.php" class="font-semibold text-gray-900 hover:text-purple-700">Mystery Boxes</a>
             </div>
         </nav>
         <div id="overlay" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50"></div>

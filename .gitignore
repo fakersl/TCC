@@ -1,3 +1,2 @@
-/vendor/
 # Ignorar arquivos de configuração com segredos
 app/config.php

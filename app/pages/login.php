@@ -1,6 +1,7 @@
 <?php
 session_start();
 require("../../vendor/autoload.php");
+require("../../")
 
 $cliente = new Google_Client();
 $cliente->setClientId('755071431063-alpka3q8aohevbcvd5va7nrh16rtbifc.apps.googleusercontent.com'); // Seu Client ID

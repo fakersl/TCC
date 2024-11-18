@@ -20,13 +20,13 @@ $resultado = $conexao->query($sql);
 
 <body class="bg-gray-100">
     <!--NAVBAR E ASIDE-->
-    <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+    <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center justify-start rtl:justify-end">
                     <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar"
                         aria-controls="logo-sidebar" type="button"
-                        class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                        class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ">
                         <span class="sr-only">Open sidebar</span>
                         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -43,7 +43,7 @@ $resultado = $conexao->query($sql);
                     <div class="flex items-center ms-3">
                         <div>
                             <button type="button"
-                                class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                                class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 "
                                 aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
                                 <img class="w-8 h-8 rounded-full"
@@ -51,31 +51,28 @@ $resultado = $conexao->query($sql);
                                     alt="user photo">
                             </button>
                         </div>
-                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow"
                             id="dropdown-user">
                             <div class="px-4 py-3" role="none">
-                                <p class="text-sm text-gray-900 dark:text-white" role="none">
+                                <p class="text-sm text-gray-900 " role="none">
                                     <?php echo isset($_SESSION['admin_nome']) ? "Olá, " . htmlspecialchars($_SESSION['admin_nome']) : 'Olá!'; ?>
                                 </p>
-                                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                                <p class="text-sm font-medium text-gray-900 truncate " role="none">
                                     <?php echo isset($_SESSION['admin_email']) ? "E-mail: " . htmlspecialchars($_SESSION['admin_email']) : ''; ?>
                                 </p>
                             </div>
 
                             <ul class="py-1" role="none">
                                 <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                                         role="menuitem">Dashboard</a>
                                 </li>
                                 <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                                         role="menuitem">Configuraçoes</a>
                                 </li>
                                 <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                                         role="menuitem">Sair</a>
                                 </li>
                             </ul>
@@ -86,15 +83,14 @@ $resultado = $conexao->query($sql);
         </div>
     </nav>
     <aside id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 "
         aria-label="Sidebar">
-        <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
             <ul class="space-y-2 font-medium">
                 <!--dashboard-->
                 <li>
-                    <a href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                        <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 "
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 22 21">
                             <path
@@ -110,10 +106,10 @@ $resultado = $conexao->query($sql);
                 <li>
                     <!-- Botão de dropdown para Produtos -->
                     <button type="button"
-                        class="flex items-center w-full p-3 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        class="flex items-center w-full p-3 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 "
                         aria-controls="dropdown-produtos" data-collapse-toggle="dropdown-produtos" aria-expanded="false"
                         onclick="toggleDropdown('dropdown-produtos', 'arrow-produtos')">
-                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 "
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z"
@@ -131,11 +127,11 @@ $resultado = $conexao->query($sql);
 
                     <!-- Conteúdo do dropdown para Produtos -->
                     <div id="dropdown-produtos" class="hidden mt-2 space-y-2">
-                        <a href="./CRUD/criar_produtos.php"
-                            class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Adicionar
+                        <a href="./criar_produtos.php"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline hover:bg-gray-100 ">Adicionar
                             Produto</a>
-                        <a href="./CRUD/listar_produtos.php"
-                            class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Lista
+                        <a href="#"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline hover:bg-gray-100 ">Lista
                             de Produtos
                         </a>
                     </div>
@@ -145,12 +141,12 @@ $resultado = $conexao->query($sql);
                 <li>
                     <!-- Botão de dropdown para Coleções -->
                     <button type="button"
-                        class="flex items-center w-full p-3 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        class="flex items-center w-full p-3 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 "
                         aria-controls="dropdown-colecoes" data-collapse-toggle="dropdown-colecoes" aria-expanded="false"
                         onclick="toggleDropdownIcon('dropdown-colecoes-icon')">
 
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 ">
                             <path fill-rule="evenodd"
                                 d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z"
                                 clip-rule="evenodd" />
@@ -167,12 +163,12 @@ $resultado = $conexao->query($sql);
 
                     <!-- Conteúdo do dropdown para Coleções -->
                     <div id="dropdown-colecoes" class="hidden mt-2 space-y-2">
-                        <a href="./CRUD/criar_colecoes.php"
-                            class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+                        <a href="./criar_colecoes.php"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline hover:bg-gray-100 ">
                             Adicionar coleção
                         </a>
-                        <a href="./CRUD/listar_colecoes.php"
-                            class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+                        <a href="#"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline hover:bg-gray-100 ">
                             Lista de coleções
                         </a>
                     </div>
@@ -182,12 +178,12 @@ $resultado = $conexao->query($sql);
                 <li>
                     <!-- Botão de dropdown para fornecedores -->
                     <button type="button"
-                        class="flex items-center w-full p-3 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        class="flex items-center w-full p-3 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 "
                         aria-controls="dropdown-fornecedores" data-collapse-toggle="dropdown-fornecedores"
                         aria-expanded="false" onclick="toggleDropdownIcon('dropdown-fornecedores-icon')">
 
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
+                            class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 ">
                             >
                             <path
                                 d="M3.375 4.5C2.339 4.5 1.5 5.34 1.5 6.375V13.5h12V6.375c0-1.036-.84-1.875-1.875-1.875h-8.25ZM13.5 15h-12v2.625c0 1.035.84 1.875 1.875 1.875h.375a3 3 0 1 1 6 0h3a.75.75 0 0 0 .75-.75V15Z" />
@@ -208,22 +204,22 @@ $resultado = $conexao->query($sql);
 
                     <!-- Conteúdo do dropdown para fornecedores -->
                     <div id="dropdown-fornecedores" class="hidden mt-2 space-y-2">
-                        <a href="./CRUD/cadastrar_forn.php"
-                            class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+                        <a href="./cadastrar_forn.php"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline hover:bg-gray-100 ">
                             Adicionar fornecedor
                         </a>
-                        <a href="./CRUD/listar_fornecedores.php"
-                            class="block hover:text-purple-500 hover:underline px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
+                        <a href="./listar_fornecedores.php"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:text-purple-500 hover:underline hover:bg-gray-100 ">
                             Lista de fornecedores
                         </a>
                     </div>
                 </li>
 
                 <!--transações-->
-                <li>
+                <!-- <li>
                     <a href="listar_transacoes.php"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 "
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                             <path d="M12 7.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z" />
                             <path fill-rule="evenodd"
@@ -234,65 +230,66 @@ $resultado = $conexao->query($sql);
                         </svg>
                         <span class="flex-1 ms-3 whitespace-nowrap">Transações</span>
                         <span
-                            class="inline-flex items-center justify-center w-3 h-3 p-3 text-sm font-medium text-purple-800 bg-purple-100 rounded-full ms-3 dark:bg-purple-900 dark:text-purple-300">0</span>
+                            class="inline-flex items-center justify-center w-3 h-3 p-3 text-sm font-medium text-purple-800 bg-purple-100 rounded-full ms-3">0</span>
                     </a>
-                </li>
+                </li> -->
 
             </ul>
         </div>
     </aside>
 
     <!-- Conteúdo Principal -->
-    <div class="relative w-full max-w-5xl p-6 mx-auto ml-64 sm:p-5">
-        <div class="p-6">
-            <h1 class="text-xl font-bold">Lista de Produtos</h1>
-        </div>
-        <table class="min-w-full mt-4 overflow-hidden bg-white rounded-lg shadow-md">
-            <thead>
-                <tr class="text-white bg-gray-800">
-                    <th class="px-4 py-3 text-left">ID</th>
-                    <th class="px-4 py-3 text-left">Nome</th>
-                    <th class="px-4 py-3 text-left">Preço</th>
-                    <th class="px-4 py-3 text-left">Categoria</th>
-                    <th class="px-4 py-3 text-left">Marca</th>
-                    <th class="px-4 py-3 text-left">Coleção</th>
-                    <th class="px-4 py-3 text-left">Descrição</th>
-                    <th class="px-4 py-3 text-left">Imagem</th>
-                    <th class="px-4 py-3 text-left">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($produto = $resultado->fetch_assoc()): ?>
-                    <tr class="border-b">
-                        <td class="px-4 py-3"><?php echo $produto['idProduto']; ?></td>
-                        <td class="px-4 py-3"><?php echo $produto['nomeProduto']; ?></td>
-                        <td class="px-4 py-4">R$
-                            <?php echo number_format($produto['precoProduto'], 2, ',', '.'); ?>
-                        </td>
-                        <td class="px-4 py-3"><?php echo $produto['categoriaProduto']; ?></td>
-                        <td class="px-4 py-3"><?php echo $produto['marcaProduto']; ?></td>
-                        <td class="px-4 py-3"><?php echo $produto['nomeColecao']; ?></td>
-                        <td class="px-4 py-3"><?php echo $produto['descricaoProduto']; ?>
-                        </td>
-                        <td class="px-4 py-3">
-                            <img src="/Tcc/public/uploads/<?php echo htmlspecialchars($produto['imagemProduto']); ?>"
-                                alt="<?php echo htmlspecialchars($produto['nomeProduto']); ?>"
-                                class="object-cover w-16 h-16">
-                        </td>
-                        <td class="px-4 py-3">
-                            <a href="editar_produtos.php?id=<?php echo $produto['idProduto']; ?>"
-                                class="text-purple-500 hover:underline">Editar</a>
-                            <a href="deletar_produtos.php?id=<?php echo $produto['idProduto']; ?>"
-                                class="ml-4 text-red-500 hover:underline">Deletar</a>
-                        </td>
+    <div class="p-4 sm:ml-64">
+        <div class="p-4 mt-14">
+            <div class="p-6">
+                <h1 class="text-xl font-bold">Lista de Produtos</h1>
+            </div>
+            <table class="min-w-full mt-4 overflow-x-auto bg-white rounded-lg shadow-md">
+                <caption class="sr-only">Lista de produtos disponíveis na loja</caption>
+                <thead>
+                    <tr class="text-white bg-gray-800">
+                        <th class="px-4 py-3 text-left">ID</th>
+                        <th class="px-4 py-3 text-left">Nome</th>
+                        <th class="px-4 py-3 text-left">Preço</th>
+                        <th class="px-4 py-3 text-left">Categoria</th>
+                        <th class="px-4 py-3 text-left">Marca</th>
+                        <th class="px-4 py-3 text-left">Coleção</th>
+                        <th class="px-4 py-3 text-left">Imagem</th>
+                        <th class="px-4 py-3 text-left">Ações</th>
                     </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php while ($produto = $resultado->fetch_assoc()): ?>
+                        <tr class="border-b hover:bg-gray-100">
+                            <td class="px-4 py-3"><?php echo $produto['idProduto']; ?></td>
+                            <td class="px-4 py-3"><?php echo $produto['nomeProduto']; ?></td>
+                            <td class="px-4 py-4">R$
+                                <?php echo number_format($produto['precoProduto'], 2, ',', '.'); ?>
+                            </td>
+                            <td class="px-4 py-3"><?php echo $produto['categoriaProduto']; ?></td>
+                            <td class="px-4 py-3"><?php echo $produto['marcaProduto']; ?></td>
+                            <td class="px-4 py-3"><?php echo $produto['nomeColecao']; ?></td>
+                            <td class="px-4 py-3">
+                                <img src="../../../../public/uploads/<?php echo htmlspecialchars($produto['imagemProduto']); ?>"
+                                    alt="<?php echo htmlspecialchars($produto['nomeProduto']); ?>"
+                                    class="object-cover w-16 h-16 rounded-lg">
+                            </td>
+                            <td class="px-4 py-3">
+                                <a href="editar_produtos.php?id=<?php echo $produto['idProduto']; ?>"
+                                    class="text-purple-500 hover:underline">Editar</a>
+                                <a href="deletar_produtos.php?id=<?php echo $produto['idProduto']; ?>"
+                                    class="ml-4 text-red-500 hover:underline"
+                                    onclick="return confirm('Você tem certeza que deseja deletar este produto?')">Deletar</a>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 
 </html>

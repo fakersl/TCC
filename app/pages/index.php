@@ -80,7 +80,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'add_to_cart') {
     </script>
 </head>
 
-<body>
+<body class="select-none">
     <div class="pt-32">
         <nav class="fixed top-0 z-50 w-full p-4 bg-white border-b border-gray-200 shadow-md start-0">
             <div class="flex items-center justify-between pb-3">

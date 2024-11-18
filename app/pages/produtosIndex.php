@@ -16,7 +16,8 @@
         onclick="closeSidebar()"></div>
 
     <!-- Sidebar -->
-    <div id="productSidebar"
+    <!-- Sidebar de Seleção de Produto (renomeado para "productSidebar2") -->
+    <div id="productSidebar2"
         class="fixed top-0 right-0 z-50 h-full transition-transform duration-300 transform translate-x-full bg-white shadow-lg w-96">
         <div class="p-6">
             <button onclick="closeSidebar()" class="text-gray-500 hover:text-gray-900">&times;</button>
@@ -63,6 +64,7 @@
         </div>
     </div>
 
+
     <!-- Produtos -->
     <section class="py-8 bg-gray-50">
         <div class="max-w-screen-xl px-4 mx-auto">
@@ -84,8 +86,11 @@
                         <div class="p-4 bg-white rounded-lg shadow-md">
                             <div class="relative flex items-center justify-center w-full h-auto overflow-hidden rounded-lg">
                                 <a href="produtoOverview.php?idProduto=<?php echo $produto['idProduto']; ?>">
-                                    <img class="object-cover w-full h-full" src="<?php echo $imagemProduto; ?>"
-                                        alt="<?php echo $produto['nomeProduto']; ?>">
+                                    <img src="../../public/uploads/<?php echo htmlspecialchars($produto['imagemProduto']); ?>"
+                                        alt="<?php echo htmlspecialchars($produto['nomeProduto']); ?>"
+                                        class="object-cover w-full h-full">
+
+
                                 </a>
                                 <span
                                     class="absolute top-2 left-2 text-xs font-semibold text-white bg-red-500 rounded-full px-2 py-0.5">15%
@@ -177,17 +182,21 @@
         let selectedSize = null;
 
         function openSidebar(product) {
+            // Garantir que o sidebar seja mostrado
             document.getElementById("productSidebar").style.transform = "translateX(0)";
             document.getElementById("overlay").classList.remove("hidden");
 
-            // Preencher informações do produto na Sidebar
-            document.getElementById("sidebarImage").src = product.image;
+            // Atualizar as informações do produto na sidebar
+            const sidebarImage = document.getElementById("sidebarImage");
+            sidebarImage.src = product.image;
+            sidebarImage.style.position = 'relative';  // Garantir que a imagem tenha posição adequada
+
             document.getElementById("sidebarProductName").textContent = product.name;
             document.getElementById("sidebarProductPrice").textContent = `R$ ${product.price}`;
 
-            // Opções de Cor
+            // Atualizar opções de cor e tamanho
             const colorOptions = document.getElementById("colorOptions");
-            colorOptions.innerHTML = '';
+            colorOptions.innerHTML = '';  // Limpar as cores anteriores
             product.colors.forEach(color => {
                 const colorBtn = document.createElement('button');
                 colorBtn.classList.add('w-6', 'h-6', 'rounded-full', 'border', 'border-gray-300');
@@ -196,9 +205,8 @@
                 colorOptions.appendChild(colorBtn);
             });
 
-            // Opções de Tamanho
             const sizeOptions = document.getElementById("sizeOptions");
-            sizeOptions.innerHTML = '';
+            sizeOptions.innerHTML = '';  // Limpar os tamanhos anteriores
             product.sizes.forEach(size => {
                 const sizeBtn = document.createElement('button');
                 sizeBtn.classList.add('px-2', 'py-1', 'border', 'rounded', 'border-gray-300', 'hover:bg-gray-200');

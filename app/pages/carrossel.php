@@ -19,15 +19,15 @@
     <div id="default-carousel" class="relative w-full mt-20" data-carousel="slide">
         <div class="relative h-screen overflow-hidden">
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="https://placehold.co/1280x720" class="absolute top-0 left-0 block object-cover w-full h-full"
+                <img src="../../src/img/banner.png" class="absolute top-0 left-0 block object-cover w-full h-full"
                     alt="...">
             </div>
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="https://placehold.co/1280x720" class="absolute top-0 left-0 block object-cover w-full h-full"
+                <img src="../../src/img/banner.png" class="absolute top-0 left-0 block object-cover w-full h-full"
                     alt="...">
             </div>
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="https://placehold.co/1280x720" class="absolute top-0 left-0 block object-cover w-full h-full"
+                <img src="../../src/img/banner.png" class="absolute top-0 left-0 block object-cover w-full h-full"
                     alt="...">
             </div>
         </div>
